@@ -162,9 +162,9 @@ export async function syncWhoopDevice(
     }
 
     const allDates = new Set<string>([
-      ...recoveryByDate.keys(),
-      ...sleepByDate.keys(),
-      ...cycleByDate.keys(),
+      ...Array.from(recoveryByDate.keys()),
+      ...Array.from(sleepByDate.keys()),
+      ...Array.from(cycleByDate.keys()),
     ]);
 
     if (allDates.size === 0) {
