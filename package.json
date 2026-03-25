@@ -4,7 +4,7 @@
   "private": true,
   "description": "Personal health intelligence platform — wearables, body comp, genetics, and habits into actionable recommendations",
   "scripts": {
-    "dev": "node scripts/postinstall.js 2>/dev/null; next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
