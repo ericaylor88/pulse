@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { syncAllWhoopDevices } from "@/lib/whoop/sync";
 import { syncAllWithingsDevices } from "@/lib/withings/sync";
+import { syncWeather } from "@/lib/weather/sync";
 
 export const maxDuration = 60;
 
@@ -41,6 +42,21 @@ export async function GET(request: NextRequest) {
     results.withings = {
       ok: false,
       error: err instanceof Error ? err.message : "Withings sync failed",
+    };
+  }
+
+  // Sync Weather + AQI
+  try {
+    const weatherResult = await syncWeather();
+    results.weather = {
+      ok: weatherResult.errors.length === 0,
+      ...weatherResult,
+    };
+  } catch (err) {
+    console.error("[Cron Sync] Weather error:", err);
+    results.weather = {
+      ok: false,
+      error: err instanceof Error ? err.message : "Weather sync failed",
     };
   }
 
