@@ -1,0 +1,1853 @@
+[
+  {
+    "result_id": "8646460f39fa4b65abce84528fb36419",
+    "scan_info": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-12-10T08:10:27-08:00",
+      "analyze_time": "2025-12-10T10:11:48-08:00",
+      "patient_intake": {
+        "age_years": 37.3,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 6.06,
+        "lean_mass_kg": 66.27,
+        "bone_mass_kg": 3.3,
+        "total_mass_kg": 75.64,
+        "tissue_fat_pct": 8.38,
+        "region_fat_pct": 8.02
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.26,
+          "lean_mass_kg": 4.41,
+          "bone_mass_kg": 0.07,
+          "total_mass_kg": 4.74,
+          "tissue_fat_pct": 5.64,
+          "region_fat_pct": 5.56
+        },
+        "gynoid": {
+          "fat_mass_kg": 0.82,
+          "lean_mass_kg": 10.35,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.51,
+          "tissue_fat_pct": 7.35,
+          "region_fat_pct": 7.13
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.35,
+          "lean_mass_kg": 4.65,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.22,
+          "tissue_fat_pct": 6.93,
+          "region_fat_pct": 6.63
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.07,
+          "lean_mass_kg": 11.42,
+          "bone_mass_kg": 0.61,
+          "total_mass_kg": 13.11,
+          "tissue_fat_pct": 8.55,
+          "region_fat_pct": 8.15
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.35,
+          "lean_mass_kg": 4.56,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.14,
+          "tissue_fat_pct": 7.1,
+          "region_fat_pct": 6.78
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.21,
+          "lean_mass_kg": 11.94,
+          "bone_mass_kg": 0.67,
+          "total_mass_kg": 13.81,
+          "tissue_fat_pct": 9.17,
+          "region_fat_pct": 8.73
+        },
+        "trunk": {
+          "fat_mass_kg": 2.15,
+          "lean_mass_kg": 30.02,
+          "bone_mass_kg": 0.89,
+          "total_mass_kg": 33.06,
+          "tissue_fat_pct": 6.68,
+          "region_fat_pct": 6.5
+        }
+      },
+      "android_gynoid_ratio": 0.78
+    },
+    "bone_density": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.387,
+        "bone_area_cm2": 2381.78,
+        "bone_mineral_content_g": 3303.0,
+        "age_sex_z_percentile": 60,
+        "peak_sex_t_percentile": 62
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.059,
+          "bone_area_cm2": 213.97,
+          "bone_mineral_content_g": 226.6
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.388,
+          "bone_area_cm2": 442.16,
+          "bone_mineral_content_g": 613.6
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.074,
+          "bone_area_cm2": 214.72,
+          "bone_mineral_content_g": 230.6
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.453,
+          "bone_area_cm2": 458.63,
+          "bone_mineral_content_g": 666.2
+        },
+        "trunk": {
+          "bone_mineral_density": 1.13,
+          "bone_area_cm2": 790.89,
+          "bone_mineral_content_g": 894.0
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 35,
+          "max_years": 39
+        },
+        "reference_dataset_size": 313000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 8.0,
+          "percentile": 1
+        },
+        "vat_mass_kg": {
+          "value": 0.07,
+          "percentile": 5
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.96,
+          "percentile": 78
+        },
+        "limb_lmi_kg_m2": {
+          "value": 10.3,
+          "percentile": 77
+        },
+        "bone_density_g_cm2": {
+          "value": 1.387,
+          "percentile": 62
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.07,
+      "vat_volume_cm3": 77.74
+    },
+    "rmr": {
+      "result_id": "8646460f39fa4b65abce84528fb36419",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2069
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 2031
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1849
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1784
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+    "scan_info": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-11-11T07:15:56-08:00",
+      "analyze_time": "2025-11-11T09:17:01-08:00",
+      "patient_intake": {
+        "age_years": 37.2,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 6.17,
+        "lean_mass_kg": 66.24,
+        "bone_mass_kg": 3.29,
+        "total_mass_kg": 75.71,
+        "tissue_fat_pct": 8.52,
+        "region_fat_pct": 8.15
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.27,
+          "lean_mass_kg": 4.46,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.79,
+          "tissue_fat_pct": 5.71,
+          "region_fat_pct": 5.63
+        },
+        "gynoid": {
+          "fat_mass_kg": 0.87,
+          "lean_mass_kg": 10.38,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.59,
+          "tissue_fat_pct": 7.7,
+          "region_fat_pct": 7.48
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.34,
+          "lean_mass_kg": 4.56,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 5.12,
+          "tissue_fat_pct": 7.0,
+          "region_fat_pct": 6.7
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.0,
+          "lean_mass_kg": 11.53,
+          "bone_mass_kg": 0.62,
+          "total_mass_kg": 13.15,
+          "tissue_fat_pct": 8.01,
+          "region_fat_pct": 7.63
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.41,
+          "lean_mass_kg": 4.3,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 4.93,
+          "tissue_fat_pct": 8.75,
+          "region_fat_pct": 8.35
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.09,
+          "lean_mass_kg": 11.85,
+          "bone_mass_kg": 0.65,
+          "total_mass_kg": 13.59,
+          "tissue_fat_pct": 8.39,
+          "region_fat_pct": 7.99
+        },
+        "trunk": {
+          "fat_mass_kg": 2.38,
+          "lean_mass_kg": 30.38,
+          "bone_mass_kg": 0.91,
+          "total_mass_kg": 33.67,
+          "tissue_fat_pct": 7.28,
+          "region_fat_pct": 7.08
+        }
+      },
+      "android_gynoid_ratio": 0.75
+    },
+    "bone_density": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.392,
+        "bone_area_cm2": 2364.57,
+        "bone_mineral_content_g": 3292.2,
+        "age_sex_z_percentile": 62,
+        "peak_sex_t_percentile": 64
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.064,
+          "bone_area_cm2": 209.26,
+          "bone_mineral_content_g": 222.7
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.435,
+          "bone_area_cm2": 431.72,
+          "bone_mineral_content_g": 619.6
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.072,
+          "bone_area_cm2": 212.38,
+          "bone_mineral_content_g": 227.6
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.448,
+          "bone_area_cm2": 449.32,
+          "bone_mineral_content_g": 650.5
+        },
+        "trunk": {
+          "bone_mineral_density": 1.131,
+          "bone_area_cm2": 802.08,
+          "bone_mineral_content_g": 907.1
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 35,
+          "max_years": 39
+        },
+        "reference_dataset_size": 313000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 8.2,
+          "percentile": 1
+        },
+        "vat_mass_kg": {
+          "value": 0.1,
+          "percentile": 6
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.95,
+          "percentile": 78
+        },
+        "limb_lmi_kg_m2": {
+          "value": 10.2,
+          "percentile": 74
+        },
+        "bone_density_g_cm2": {
+          "value": 1.392,
+          "percentile": 63
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.1,
+      "vat_volume_cm3": 110.01
+    },
+    "rmr": {
+      "result_id": "f4d99bbf9131477c8e9cce0a528c94fd",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2068
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 2030
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1849
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1783
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "bf4674346a284c3781790ed05bb63980",
+    "scan_info": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-09-10T07:29:43-07:00",
+      "analyze_time": "2025-09-10T09:31:14-07:00",
+      "patient_intake": {
+        "age_years": 37.0,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 7.5,
+        "lean_mass_kg": 65.83,
+        "bone_mass_kg": 3.3,
+        "total_mass_kg": 76.63,
+        "tissue_fat_pct": 10.23,
+        "region_fat_pct": 9.79
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.35,
+          "lean_mass_kg": 4.33,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.74,
+          "tissue_fat_pct": 7.55,
+          "region_fat_pct": 7.45
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.0,
+          "lean_mass_kg": 10.41,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.74,
+          "tissue_fat_pct": 8.74,
+          "region_fat_pct": 8.49
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.45,
+          "lean_mass_kg": 4.47,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 5.15,
+          "tissue_fat_pct": 9.13,
+          "region_fat_pct": 8.73
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.2,
+          "lean_mass_kg": 11.52,
+          "bone_mass_kg": 0.61,
+          "total_mass_kg": 13.33,
+          "tissue_fat_pct": 9.43,
+          "region_fat_pct": 9.0
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.38,
+          "lean_mass_kg": 4.44,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.04,
+          "tissue_fat_pct": 7.89,
+          "region_fat_pct": 7.54
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.37,
+          "lean_mass_kg": 11.92,
+          "bone_mass_kg": 0.66,
+          "total_mass_kg": 13.95,
+          "tissue_fat_pct": 10.34,
+          "region_fat_pct": 9.85
+        },
+        "trunk": {
+          "fat_mass_kg": 3.14,
+          "lean_mass_kg": 29.79,
+          "bone_mass_kg": 0.91,
+          "total_mass_kg": 33.85,
+          "tissue_fat_pct": 9.54,
+          "region_fat_pct": 9.29
+        }
+      },
+      "android_gynoid_ratio": 0.88
+    },
+    "bone_density": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.397,
+        "bone_area_cm2": 2359.98,
+        "bone_mineral_content_g": 3296.6,
+        "age_sex_z_percentile": 63,
+        "peak_sex_t_percentile": 65
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.099,
+          "bone_area_cm2": 204.08,
+          "bone_mineral_content_g": 224.3
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.405,
+          "bone_area_cm2": 437.0,
+          "bone_mineral_content_g": 614.2
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.063,
+          "bone_area_cm2": 212.25,
+          "bone_mineral_content_g": 225.5
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.461,
+          "bone_area_cm2": 449.88,
+          "bone_mineral_content_g": 657.3
+        },
+        "trunk": {
+          "bone_mineral_density": 1.146,
+          "bone_area_cm2": 793.97,
+          "bone_mineral_content_g": 909.9
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 35,
+          "max_years": 39
+        },
+        "reference_dataset_size": 313000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 9.8,
+          "percentile": 2
+        },
+        "vat_mass_kg": {
+          "value": 0.16,
+          "percentile": 11
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.82,
+          "percentile": 77
+        },
+        "limb_lmi_kg_m2": {
+          "value": 10.23,
+          "percentile": 75
+        },
+        "bone_density_g_cm2": {
+          "value": 1.397,
+          "percentile": 65
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.16,
+      "vat_volume_cm3": 168.93
+    },
+    "rmr": {
+      "result_id": "bf4674346a284c3781790ed05bb63980",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2058
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 2021
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1845
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1775
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "692214085b704587a7479567163ab69f",
+    "scan_info": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-07-10T07:23:47-07:00",
+      "analyze_time": "2025-07-10T09:30:32-07:00",
+      "patient_intake": {
+        "age_years": 36.9,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 6.96,
+        "lean_mass_kg": 64.97,
+        "bone_mass_kg": 3.3,
+        "total_mass_kg": 75.23,
+        "tissue_fat_pct": 9.67,
+        "region_fat_pct": 9.25
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.29,
+          "lean_mass_kg": 4.27,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.62,
+          "tissue_fat_pct": 6.39,
+          "region_fat_pct": 6.31
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.01,
+          "lean_mass_kg": 10.15,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.49,
+          "tissue_fat_pct": 9.02,
+          "region_fat_pct": 8.76
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.37,
+          "lean_mass_kg": 4.43,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 5.02,
+          "tissue_fat_pct": 7.76,
+          "region_fat_pct": 7.41
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.23,
+          "lean_mass_kg": 11.35,
+          "bone_mass_kg": 0.63,
+          "total_mass_kg": 13.21,
+          "tissue_fat_pct": 9.8,
+          "region_fat_pct": 9.33
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.38,
+          "lean_mass_kg": 4.25,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.85,
+          "tissue_fat_pct": 8.14,
+          "region_fat_pct": 7.77
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.27,
+          "lean_mass_kg": 11.74,
+          "bone_mass_kg": 0.65,
+          "total_mass_kg": 13.67,
+          "tissue_fat_pct": 9.79,
+          "region_fat_pct": 9.32
+        },
+        "trunk": {
+          "fat_mass_kg": 2.74,
+          "lean_mass_kg": 29.46,
+          "bone_mass_kg": 0.9,
+          "total_mass_kg": 33.1,
+          "tissue_fat_pct": 8.51,
+          "region_fat_pct": 8.28
+        }
+      },
+      "android_gynoid_ratio": 0.72
+    },
+    "bone_density": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.383,
+        "bone_area_cm2": 2385.79,
+        "bone_mineral_content_g": 3298.5,
+        "age_sex_z_percentile": 60,
+        "peak_sex_t_percentile": 61
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.052,
+          "bone_area_cm2": 211.26,
+          "bone_mineral_content_g": 222.2
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.405,
+          "bone_area_cm2": 445.98,
+          "bone_mineral_content_g": 626.7
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.062,
+          "bone_area_cm2": 209.62,
+          "bone_mineral_content_g": 222.6
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.439,
+          "bone_area_cm2": 454.81,
+          "bone_mineral_content_g": 654.5
+        },
+        "trunk": {
+          "bone_mineral_density": 1.126,
+          "bone_area_cm2": 797.63,
+          "bone_mineral_content_g": 898.0
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 9.2,
+          "percentile": 1
+        },
+        "vat_mass_kg": {
+          "value": 0.13,
+          "percentile": 9
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.55,
+          "percentile": 74
+        },
+        "limb_lmi_kg_m2": {
+          "value": 10.05,
+          "percentile": 71
+        },
+        "bone_density_g_cm2": {
+          "value": 1.383,
+          "percentile": 61
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.13,
+      "vat_volume_cm3": 134.03
+    },
+    "rmr": {
+      "result_id": "692214085b704587a7479567163ab69f",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2039
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 2002
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1838
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1758
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+    "scan_info": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-05-21T07:34:34-07:00",
+      "analyze_time": "2025-05-21T09:43:35-07:00",
+      "patient_intake": {
+        "age_years": 36.7,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 6.66,
+        "lean_mass_kg": 64.78,
+        "bone_mass_kg": 3.27,
+        "total_mass_kg": 74.72,
+        "tissue_fat_pct": 9.33,
+        "region_fat_pct": 8.92
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.29,
+          "lean_mass_kg": 4.4,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.75,
+          "tissue_fat_pct": 6.2,
+          "region_fat_pct": 6.12
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.06,
+          "lean_mass_kg": 10.13,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.53,
+          "tissue_fat_pct": 9.47,
+          "region_fat_pct": 9.19
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.38,
+          "lean_mass_kg": 4.31,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.91,
+          "tissue_fat_pct": 8.11,
+          "region_fat_pct": 7.74
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.25,
+          "lean_mass_kg": 11.35,
+          "bone_mass_kg": 0.63,
+          "total_mass_kg": 13.22,
+          "tissue_fat_pct": 9.89,
+          "region_fat_pct": 9.42
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.38,
+          "lean_mass_kg": 4.16,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.75,
+          "tissue_fat_pct": 8.34,
+          "region_fat_pct": 7.95
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.32,
+          "lean_mass_kg": 11.61,
+          "bone_mass_kg": 0.65,
+          "total_mass_kg": 13.58,
+          "tissue_fat_pct": 10.2,
+          "region_fat_pct": 9.71
+        },
+        "trunk": {
+          "fat_mass_kg": 2.41,
+          "lean_mass_kg": 29.76,
+          "bone_mass_kg": 0.89,
+          "total_mass_kg": 33.06,
+          "tissue_fat_pct": 7.49,
+          "region_fat_pct": 7.29
+        }
+      },
+      "android_gynoid_ratio": 0.67
+    },
+    "bone_density": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.394,
+        "bone_area_cm2": 2345.47,
+        "bone_mineral_content_g": 3270.4,
+        "age_sex_z_percentile": 64,
+        "peak_sex_t_percentile": 64
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.112,
+          "bone_area_cm2": 196.28,
+          "bone_mineral_content_g": 218.3
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.404,
+          "bone_area_cm2": 446.52,
+          "bone_mineral_content_g": 626.8
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.079,
+          "bone_area_cm2": 203.86,
+          "bone_mineral_content_g": 219.9
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.457,
+          "bone_area_cm2": 446.83,
+          "bone_mineral_content_g": 651.0
+        },
+        "trunk": {
+          "bone_mineral_density": 1.127,
+          "bone_area_cm2": 791.63,
+          "bone_mineral_content_g": 892.3
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 8.9,
+          "percentile": 1
+        },
+        "vat_mass_kg": {
+          "value": 0.1,
+          "percentile": 7
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.49,
+          "percentile": 73
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.94,
+          "percentile": 68
+        },
+        "bone_density_g_cm2": {
+          "value": 1.394,
+          "percentile": 64
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.1,
+      "vat_volume_cm3": 109.02
+    },
+    "rmr": {
+      "result_id": "4fd1264504ed4e0eac54bd759d3364cc",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2034
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1997
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1836
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1754
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+    "scan_info": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-04-08T09:38:07-07:00",
+      "analyze_time": "2025-04-08T11:41:35-07:00",
+      "patient_intake": {
+        "age_years": 36.6,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 7.63,
+        "lean_mass_kg": 64.75,
+        "bone_mass_kg": 3.28,
+        "total_mass_kg": 75.66,
+        "tissue_fat_pct": 10.54,
+        "region_fat_pct": 10.09
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.34,
+          "lean_mass_kg": 4.39,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.79,
+          "tissue_fat_pct": 7.24,
+          "region_fat_pct": 7.14
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.26,
+          "lean_mass_kg": 10.0,
+          "bone_mass_kg": 0.34,
+          "total_mass_kg": 11.6,
+          "tissue_fat_pct": 11.17,
+          "region_fat_pct": 10.84
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.46,
+          "lean_mass_kg": 4.4,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 5.08,
+          "tissue_fat_pct": 9.51,
+          "region_fat_pct": 9.09
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.37,
+          "lean_mass_kg": 11.29,
+          "bone_mass_kg": 0.62,
+          "total_mass_kg": 13.28,
+          "tissue_fat_pct": 10.82,
+          "region_fat_pct": 10.32
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.45,
+          "lean_mass_kg": 4.2,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.87,
+          "tissue_fat_pct": 9.61,
+          "region_fat_pct": 9.18
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.44,
+          "lean_mass_kg": 11.71,
+          "bone_mass_kg": 0.65,
+          "total_mass_kg": 13.8,
+          "tissue_fat_pct": 10.96,
+          "region_fat_pct": 10.44
+        },
+        "trunk": {
+          "fat_mass_kg": 2.96,
+          "lean_mass_kg": 29.47,
+          "bone_mass_kg": 0.89,
+          "total_mass_kg": 33.33,
+          "tissue_fat_pct": 9.13,
+          "region_fat_pct": 8.88
+        }
+      },
+      "android_gynoid_ratio": 0.66
+    },
+    "bone_density": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.402,
+        "bone_area_cm2": 2341.17,
+        "bone_mineral_content_g": 3282.3,
+        "age_sex_z_percentile": 66,
+        "peak_sex_t_percentile": 67
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.093,
+          "bone_area_cm2": 202.95,
+          "bone_mineral_content_g": 221.9
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.448,
+          "bone_area_cm2": 430.34,
+          "bone_mineral_content_g": 623.1
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.056,
+          "bone_area_cm2": 210.13,
+          "bone_mineral_content_g": 222.0
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.45,
+          "bone_area_cm2": 449.17,
+          "bone_mineral_content_g": 651.3
+        },
+        "trunk": {
+          "bone_mineral_density": 1.139,
+          "bone_area_cm2": 785.41,
+          "bone_mineral_content_g": 894.7
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 10.1,
+          "percentile": 2
+        },
+        "vat_mass_kg": {
+          "value": 0.15,
+          "percentile": 11
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.48,
+          "percentile": 73
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.99,
+          "percentile": 69
+        },
+        "bone_density_g_cm2": {
+          "value": 1.402,
+          "percentile": 66
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.15,
+      "vat_volume_cm3": 162.02
+    },
+    "rmr": {
+      "result_id": "6e396ca67c1e4b6998d1da478e79033e",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2033
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1997
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1836
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1753
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "934630cd6ca849b6bc073f47fe01091d",
+    "scan_info": {
+      "result_id": "934630cd6ca849b6bc073f47fe01091d",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar Prodigy",
+      "acquire_time": "2025-03-05T07:37:40-08:00",
+      "analyze_time": "2025-03-05T07:37:43-08:00",
+      "patient_intake": {
+        "age_years": 36.5,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "934630cd6ca849b6bc073f47fe01091d",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 8.82,
+        "lean_mass_kg": 62.63,
+        "bone_mass_kg": 3.19,
+        "total_mass_kg": 74.64,
+        "tissue_fat_pct": 12.34,
+        "region_fat_pct": 11.81
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.37,
+          "lean_mass_kg": 4.35,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.78,
+          "tissue_fat_pct": 7.79,
+          "region_fat_pct": 7.69
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.38,
+          "lean_mass_kg": 9.6,
+          "bone_mass_kg": 0.32,
+          "total_mass_kg": 11.29,
+          "tissue_fat_pct": 12.58,
+          "region_fat_pct": 12.23
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.62,
+          "lean_mass_kg": 4.17,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 5.0,
+          "tissue_fat_pct": 12.86,
+          "region_fat_pct": 12.3
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.46,
+          "lean_mass_kg": 9.86,
+          "bone_mass_kg": 0.61,
+          "total_mass_kg": 11.93,
+          "tissue_fat_pct": 12.9,
+          "region_fat_pct": 12.24
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.59,
+          "lean_mass_kg": 4.09,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.91,
+          "tissue_fat_pct": 12.63,
+          "region_fat_pct": 12.07
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.59,
+          "lean_mass_kg": 10.8,
+          "bone_mass_kg": 0.63,
+          "total_mass_kg": 13.02,
+          "tissue_fat_pct": 12.86,
+          "region_fat_pct": 12.23
+        },
+        "trunk": {
+          "fat_mass_kg": 3.62,
+          "lean_mass_kg": 30.05,
+          "bone_mass_kg": 0.86,
+          "total_mass_kg": 34.52,
+          "tissue_fat_pct": 10.75,
+          "region_fat_pct": 10.48
+        }
+      },
+      "android_gynoid_ratio": 0.63
+    },
+    "bone_density": {
+      "result_id": "934630cd6ca849b6bc073f47fe01091d",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.395,
+        "bone_area_cm2": 2288.25,
+        "bone_mineral_content_g": 3191.5,
+        "age_sex_z_percentile": 64,
+        "peak_sex_t_percentile": 65
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.045,
+          "bone_area_cm2": 207.1,
+          "bone_mineral_content_g": 216.4
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.472,
+          "bone_area_cm2": 414.27,
+          "bone_mineral_content_g": 610.0
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.031,
+          "bone_area_cm2": 213.37,
+          "bone_mineral_content_g": 220.1
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.444,
+          "bone_area_cm2": 437.13,
+          "bone_mineral_content_g": 631.3
+        },
+        "trunk": {
+          "bone_mineral_density": 1.131,
+          "bone_area_cm2": 758.12,
+          "bone_mineral_content_g": 857.2
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "934630cd6ca849b6bc073f47fe01091d",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 11.8,
+          "percentile": 5
+        },
+        "total_lmi_kg_m2": {
+          "value": 19.81,
+          "percentile": 63
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.15,
+          "percentile": 44
+        },
+        "bone_density_g_cm2": {
+          "value": 1.395,
+          "percentile": 64
+        }
+      }
+    },
+    "visceral_fat": null,
+    "rmr": {
+      "result_id": "934630cd6ca849b6bc073f47fe01091d",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 1983
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1948
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1816
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1710
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "28338699789e461fba390996470fcd56",
+    "scan_info": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-02-04T09:40:18-08:00",
+      "analyze_time": "2025-02-04T12:20:46-08:00",
+      "patient_intake": {
+        "age_years": 36.4,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 8.24,
+        "lean_mass_kg": 63.64,
+        "bone_mass_kg": 3.31,
+        "total_mass_kg": 75.19,
+        "tissue_fat_pct": 11.46,
+        "region_fat_pct": 10.95
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.43,
+          "lean_mass_kg": 4.4,
+          "bone_mass_kg": 0.07,
+          "total_mass_kg": 4.89,
+          "tissue_fat_pct": 8.85,
+          "region_fat_pct": 8.72
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.21,
+          "lean_mass_kg": 9.88,
+          "bone_mass_kg": 0.33,
+          "total_mass_kg": 11.41,
+          "tissue_fat_pct": 10.9,
+          "region_fat_pct": 10.59
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.48,
+          "lean_mass_kg": 4.29,
+          "bone_mass_kg": 0.22,
+          "total_mass_kg": 4.99,
+          "tissue_fat_pct": 10.02,
+          "region_fat_pct": 9.57
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.4,
+          "lean_mass_kg": 11.13,
+          "bone_mass_kg": 0.63,
+          "total_mass_kg": 13.15,
+          "tissue_fat_pct": 11.17,
+          "region_fat_pct": 10.63
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.49,
+          "lean_mass_kg": 4.19,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 4.9,
+          "tissue_fat_pct": 10.41,
+          "region_fat_pct": 9.93
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.54,
+          "lean_mass_kg": 11.56,
+          "bone_mass_kg": 0.66,
+          "total_mass_kg": 13.76,
+          "tissue_fat_pct": 11.79,
+          "region_fat_pct": 11.22
+        },
+        "trunk": {
+          "fat_mass_kg": 3.4,
+          "lean_mass_kg": 28.93,
+          "bone_mass_kg": 0.91,
+          "total_mass_kg": 33.23,
+          "tissue_fat_pct": 10.51,
+          "region_fat_pct": 10.22
+        }
+      },
+      "android_gynoid_ratio": 0.82
+    },
+    "bone_density": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.402,
+        "bone_area_cm2": 2363.11,
+        "bone_mineral_content_g": 3312.4,
+        "age_sex_z_percentile": 66,
+        "peak_sex_t_percentile": 67
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.049,
+          "bone_area_cm2": 212.79,
+          "bone_mineral_content_g": 223.3
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.452,
+          "bone_area_cm2": 431.08,
+          "bone_mineral_content_g": 625.8
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.044,
+          "bone_area_cm2": 216.67,
+          "bone_mineral_content_g": 226.2
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.46,
+          "bone_area_cm2": 452.25,
+          "bone_mineral_content_g": 660.2
+        },
+        "trunk": {
+          "bone_mineral_density": 1.144,
+          "bone_area_cm2": 793.41,
+          "bone_mineral_content_g": 907.3
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 11.0,
+          "percentile": 3
+        },
+        "vat_mass_kg": {
+          "value": 0.27,
+          "percentile": 24
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.13,
+          "percentile": 68
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.86,
+          "percentile": 66
+        },
+        "bone_density_g_cm2": {
+          "value": 1.402,
+          "percentile": 66
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.27,
+      "vat_volume_cm3": 288.19
+    },
+    "rmr": {
+      "result_id": "28338699789e461fba390996470fcd56",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2009
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1973
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1826
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1732
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "ea16215e62744901a85a636758eeb5a0",
+    "scan_info": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar iDXA",
+      "acquire_time": "2025-01-03T09:24:10-08:00",
+      "analyze_time": "2025-01-03T08:26:21-08:00",
+      "patient_intake": {
+        "age_years": 36.4,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 9.0,
+        "lean_mass_kg": 63.65,
+        "bone_mass_kg": 3.3,
+        "total_mass_kg": 75.95,
+        "tissue_fat_pct": 12.39,
+        "region_fat_pct": 11.85
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.48,
+          "lean_mass_kg": 4.47,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 5.01,
+          "tissue_fat_pct": 9.73,
+          "region_fat_pct": 9.61
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.32,
+          "lean_mass_kg": 9.77,
+          "bone_mass_kg": 0.33,
+          "total_mass_kg": 11.43,
+          "tissue_fat_pct": 11.94,
+          "region_fat_pct": 11.59
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.52,
+          "lean_mass_kg": 4.34,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.09,
+          "tissue_fat_pct": 10.73,
+          "region_fat_pct": 10.25
+        },
+        "left_leg": {
+          "fat_mass_kg": 1.54,
+          "lean_mass_kg": 10.8,
+          "bone_mass_kg": 0.63,
+          "total_mass_kg": 12.97,
+          "tissue_fat_pct": 12.5,
+          "region_fat_pct": 11.9
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.58,
+          "lean_mass_kg": 4.37,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.18,
+          "tissue_fat_pct": 11.67,
+          "region_fat_pct": 11.15
+        },
+        "right_leg": {
+          "fat_mass_kg": 1.6,
+          "lean_mass_kg": 11.35,
+          "bone_mass_kg": 0.65,
+          "total_mass_kg": 13.61,
+          "tissue_fat_pct": 12.34,
+          "region_fat_pct": 11.75
+        },
+        "trunk": {
+          "fat_mass_kg": 3.8,
+          "lean_mass_kg": 29.07,
+          "bone_mass_kg": 0.9,
+          "total_mass_kg": 33.77,
+          "tissue_fat_pct": 11.56,
+          "region_fat_pct": 11.25
+        }
+      },
+      "android_gynoid_ratio": 0.83
+    },
+    "bone_density": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.408,
+        "bone_area_cm2": 2346.86,
+        "bone_mineral_content_g": 3305.0,
+        "age_sex_z_percentile": 68,
+        "peak_sex_t_percentile": 68
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.13,
+          "bone_area_cm2": 200.48,
+          "bone_mineral_content_g": 226.5
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.442,
+          "bone_area_cm2": 433.56,
+          "bone_mineral_content_g": 625.3
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.082,
+          "bone_area_cm2": 213.48,
+          "bone_mineral_content_g": 231.0
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.467,
+          "bone_area_cm2": 445.45,
+          "bone_mineral_content_g": 653.4
+        },
+        "trunk": {
+          "bone_mineral_density": 1.135,
+          "bone_area_cm2": 794.06,
+          "bone_mineral_content_g": 901.4
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 34,
+          "max_years": 38
+        },
+        "reference_dataset_size": 327000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 11.9,
+          "percentile": 5
+        },
+        "vat_mass_kg": {
+          "value": 0.34,
+          "percentile": 33
+        },
+        "total_lmi_kg_m2": {
+          "value": 20.13,
+          "percentile": 68
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.76,
+          "percentile": 63
+        },
+        "bone_density_g_cm2": {
+          "value": 1.408,
+          "percentile": 68
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.34,
+      "vat_volume_cm3": 361.14
+    },
+    "rmr": {
+      "result_id": "ea16215e62744901a85a636758eeb5a0",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 2009
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1973
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1826
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1732
+        }
+      ]
+    }
+  },
+  {
+    "result_id": "00e377c7d39e479fbbe5d205252009db",
+    "scan_info": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "scan-info",
+      "scanner_model": "GE Lunar Prodigy",
+      "acquire_time": "2024-02-02T08:06:06-08:00",
+      "analyze_time": "2025-01-03T07:25:36-08:00",
+      "patient_intake": {
+        "age_years": 35.4,
+        "height_cm": 177.8,
+        "weight_kg": 74.4
+      }
+    },
+    "composition": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "composition",
+      "total": {
+        "fat_mass_kg": 11.91,
+        "lean_mass_kg": 61.86,
+        "bone_mass_kg": 3.23,
+        "total_mass_kg": 77.0,
+        "tissue_fat_pct": 16.14,
+        "region_fat_pct": 15.46
+      },
+      "regions": {
+        "android": {
+          "fat_mass_kg": 0.65,
+          "lean_mass_kg": 4.26,
+          "bone_mass_kg": 0.06,
+          "total_mass_kg": 4.97,
+          "tissue_fat_pct": 13.18,
+          "region_fat_pct": 13.02
+        },
+        "gynoid": {
+          "fat_mass_kg": 1.98,
+          "lean_mass_kg": 9.57,
+          "bone_mass_kg": 0.31,
+          "total_mass_kg": 11.86,
+          "tissue_fat_pct": 17.12,
+          "region_fat_pct": 16.67
+        },
+        "left_arm": {
+          "fat_mass_kg": 0.8,
+          "lean_mass_kg": 4.25,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.27,
+          "tissue_fat_pct": 15.78,
+          "region_fat_pct": 15.1
+        },
+        "left_leg": {
+          "fat_mass_kg": 2.22,
+          "lean_mass_kg": 10.05,
+          "bone_mass_kg": 0.62,
+          "total_mass_kg": 12.89,
+          "tissue_fat_pct": 18.06,
+          "region_fat_pct": 17.19
+        },
+        "right_arm": {
+          "fat_mass_kg": 0.78,
+          "lean_mass_kg": 4.21,
+          "bone_mass_kg": 0.23,
+          "total_mass_kg": 5.22,
+          "tissue_fat_pct": 15.57,
+          "region_fat_pct": 14.88
+        },
+        "right_leg": {
+          "fat_mass_kg": 2.32,
+          "lean_mass_kg": 10.99,
+          "bone_mass_kg": 0.66,
+          "total_mass_kg": 13.96,
+          "tissue_fat_pct": 17.41,
+          "region_fat_pct": 16.6
+        },
+        "trunk": {
+          "fat_mass_kg": 4.83,
+          "lean_mass_kg": 28.65,
+          "bone_mass_kg": 0.85,
+          "total_mass_kg": 34.33,
+          "tissue_fat_pct": 14.42,
+          "region_fat_pct": 14.07
+        }
+      },
+      "android_gynoid_ratio": 0.78
+    },
+    "bone_density": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "bone-density",
+      "total": {
+        "bone_mineral_density": 1.403,
+        "bone_area_cm2": 2305.32,
+        "bone_mineral_content_g": 3234.8,
+        "age_sex_z_percentile": 66,
+        "peak_sex_t_percentile": 67
+      },
+      "regions": {
+        "left_arm": {
+          "bone_mineral_density": 1.09,
+          "bone_area_cm2": 207.66,
+          "bone_mineral_content_g": 226.4
+        },
+        "left_leg": {
+          "bone_mineral_density": 1.483,
+          "bone_area_cm2": 418.98,
+          "bone_mineral_content_g": 621.3
+        },
+        "right_arm": {
+          "bone_mineral_density": 1.06,
+          "bone_area_cm2": 218.34,
+          "bone_mineral_content_g": 231.4
+        },
+        "right_leg": {
+          "bone_mineral_density": 1.528,
+          "bone_area_cm2": 429.1,
+          "bone_mineral_content_g": 655.6
+        },
+        "trunk": {
+          "bone_mineral_density": 1.094,
+          "bone_area_cm2": 773.85,
+          "bone_mineral_content_g": 846.6
+        }
+      }
+    },
+    "percentiles": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "percentiles",
+      "params": {
+        "gender": "male",
+        "reference_age_range": {
+          "min_years": 33,
+          "max_years": 37
+        },
+        "reference_dataset_size": 343000
+      },
+      "metrics": {
+        "total_body_fat_pct": {
+          "value": 15.5,
+          "percentile": 15
+        },
+        "vat_mass_kg": {
+          "value": 0.16,
+          "percentile": 13
+        },
+        "total_lmi_kg_m2": {
+          "value": 19.57,
+          "percentile": 60
+        },
+        "limb_lmi_kg_m2": {
+          "value": 9.33,
+          "percentile": 50
+        },
+        "bone_density_g_cm2": {
+          "value": 1.403,
+          "percentile": 67
+        }
+      }
+    },
+    "visceral_fat": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "visceral-fat",
+      "vat_mass_kg": 0.16,
+      "vat_volume_cm3": 166.36
+    },
+    "rmr": {
+      "result_id": "00e377c7d39e479fbbe5d205252009db",
+      "section_name": "rmr",
+      "estimates": [
+        {
+          "formula": "ten Haaf (2014)",
+          "kcal_per_day": 1967
+        },
+        {
+          "formula": "Cunningham (1980)",
+          "kcal_per_day": 1932
+        },
+        {
+          "formula": "De Lorenzo (1999)",
+          "kcal_per_day": 1809
+        },
+        {
+          "formula": "Mifflin-St. Jeor (1990)",
+          "kcal_per_day": 1695
+        }
+      ]
+    }
+  }
+]
