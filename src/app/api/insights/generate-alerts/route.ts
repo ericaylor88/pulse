@@ -8,7 +8,7 @@ interface DailyMetric { date: string; recovery_score: number | null; hrv_rmssd: 
 interface CheckIn { date: string; coffee_cups: number | null; coffee_last_time: string | null; alcohol_drinks: number | null; foam_rolling: boolean; compression: boolean; tea_before_bed: boolean; video_games: boolean; }
 interface GeneticSNP { rsid: string; gene: string; genotype: string; trait: string; interpretation: string; }
 interface RuleContext { metrics7d: DailyMetric[]; metrics30d: DailyMetric[]; checkIns7d: CheckIn[]; genetics: GeneticSNP[]; }
-interface RuleResult { text: string; confidence_tier: "high" | "medium" | "low"; source_type: "rule" | "genetic"; source_variables: string[]; }
+interface RuleResult { title: string; body: string; confidence_tier: "high" | "medium" | "low"; source_type: "rule" | "genetic"; source_variables: string[]; category: string; }
 interface Rule { id: string; evaluate: (ctx: RuleContext) => RuleResult | null; }
 
 function avg(values: (number | null)[]): number | null {
@@ -37,7 +37,7 @@ const RULES: Rule[] = [
       if (lateDays.length === 0) return null;
       const cutoffLabel = isSlow ? "noon" : "2 PM";
       const type = isSlow ? "slow" : "fast";
-      return { text: `Based on your CYP1A2 genotype (${cyp1a2}), you're a ${type} caffeine metabolizer. Research suggests a cutoff of ${cutoffLabel} for optimal sleep. You've had late coffee on ${lateDays.length} of the last 7 days.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["coffee_cups", "coffee_last_time", "CYP1A2"] };
+      return { title: "Caffeine Cutoff Alert", body: `Based on your CYP1A2 genotype (${cyp1a2}), you're a ${type} caffeine metabolizer. Research suggests a cutoff of ${cutoffLabel} for optimal sleep. You've had late coffee on ${lateDays.length} of the last 7 days.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["coffee_cups", "coffee_last_time", "CYP1A2"], category: "caffeine" };
     },
   },
   {
@@ -47,7 +47,7 @@ const RULES: Rule[] = [
       if (!m || m === "CC") return null;
       const variant = m === "TT" ? "homozygous (TT)" : "heterozygous (CT)";
       const reduction = m === "TT" ? "~70%" : "~30%";
-      return { text: `Your MTHFR genotype is ${variant}, which research suggests reduces methylation efficiency by ${reduction}. Consider methylfolate (L-5-MTHF) instead of folic acid, and monitor homocysteine levels in your blood panels.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["MTHFR"] };
+      return { title: "MTHFR Methylation Support", body: `Your MTHFR genotype is ${variant}, which research suggests reduces methylation efficiency by ${reduction}. Consider methylfolate (L-5-MTHF) instead of folic acid, and monitor homocysteine levels in your blood panels.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["MTHFR"], category: "supplements" };
     },
   },
   {
@@ -55,7 +55,7 @@ const RULES: Rule[] = [
     evaluate: (ctx) => {
       const v = geno(ctx.genetics, "rs1544410");
       if (!v || v === "CC") return null;
-      return { text: `Your VDR genotype (${v}) suggests reduced vitamin D receptor efficiency. Research indicates you may need higher vitamin D supplementation (4,000-5,000 IU/day) to maintain optimal levels. Track via blood panels — aim for 50-80 ng/mL.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["VDR"] };
+      return { title: "Vitamin D Receptor Efficiency", body: `Your VDR genotype (${v}) suggests reduced vitamin D receptor efficiency. Research indicates you may need higher vitamin D supplementation (4,000-5,000 IU/day) to maintain optimal levels. Track via blood panels — aim for 50-80 ng/mL.`, confidence_tier: "medium", source_type: "genetic", source_variables: ["VDR"], category: "supplements" };
     },
   },
   {
@@ -63,7 +63,7 @@ const RULES: Rule[] = [
     evaluate: (ctx) => {
       const c = geno(ctx.genetics, "rs4680");
       if (!c || c !== "AA") return null;
-      return { text: `Your COMT genotype (Met/Met) means slower dopamine clearance — you may be more stress-sensitive but also more focused. Research suggests magnesium and L-theanine can help manage stress. Prioritize recovery on high-strain days.`, confidence_tier: "low", source_type: "genetic", source_variables: ["COMT", "strain_score"] };
+      return { title: "COMT Recovery Pattern", body: `Your COMT genotype (Met/Met) means slower dopamine clearance — you may be more stress-sensitive but also more focused. Research suggests magnesium and L-theanine can help manage stress. Prioritize recovery on high-strain days.`, confidence_tier: "low", source_type: "genetic", source_variables: ["COMT", "strain_score"], category: "recovery" };
     },
   },
   {
@@ -76,7 +76,7 @@ const RULES: Rule[] = [
       if (a30 === null || a7 === null) return null;
       const drop = ((a30 - a7) / a30) * 100;
       if (drop < 10) return null;
-      return { text: `Your 7-day HRV average (${a7.toFixed(0)} ms) is ${drop.toFixed(0)}% below your 30-day baseline (${a30.toFixed(0)} ms). This may indicate accumulated stress or incomplete recovery. Consider reducing training load and prioritizing sleep.`, confidence_tier: drop >= 20 ? "high" : "medium", source_type: "rule", source_variables: ["hrv_rmssd"] };
+      return { title: "HRV Declining", body: `Your 7-day HRV average (${a7.toFixed(0)} ms) is ${drop.toFixed(0)}% below your 30-day baseline (${a30.toFixed(0)} ms). This may indicate accumulated stress or incomplete recovery. Consider reducing training load and prioritizing sleep.`, confidence_tier: drop >= 20 ? "high" : "medium", source_type: "rule", source_variables: ["hrv_rmssd"], category: "recovery" };
     },
   },
   {
@@ -89,7 +89,7 @@ const RULES: Rule[] = [
       if (a30 === null || a7 === null) return null;
       const inc = a7 - a30;
       if (inc < 3) return null;
-      return { text: `Your resting heart rate has been elevated by ${inc.toFixed(1)} bpm over the last 7 days (${a7.toFixed(0)} vs ${a30.toFixed(0)} baseline). Elevated RHR can indicate stress, illness onset, or overtraining.`, confidence_tier: inc >= 5 ? "high" : "medium", source_type: "rule", source_variables: ["resting_hr"] };
+      return { title: "Elevated Resting Heart Rate", body: `Your resting heart rate has been elevated by ${inc.toFixed(1)} bpm over the last 7 days (${a7.toFixed(0)} vs ${a30.toFixed(0)} baseline). Elevated RHR can indicate stress, illness onset, or overtraining.`, confidence_tier: inc >= 5 ? "high" : "medium", source_type: "rule", source_variables: ["resting_hr"], category: "recovery" };
     },
   },
   {
@@ -102,7 +102,7 @@ const RULES: Rule[] = [
       const hrs = a / 60;
       if (hrs >= 7) return null;
       const deficit = (7 - hrs) * 7;
-      return { text: `You're averaging ${hrs.toFixed(1)} hours of sleep — ${deficit.toFixed(1)} hours of sleep debt per week. Recovery scores are strongly correlated with total sleep. Aim for 7-8 hours consistently.`, confidence_tier: hrs < 6 ? "high" : "medium", source_type: "rule", source_variables: ["total_sleep_min", "recovery_score"] };
+      return { title: "Sleep Debt Accumulating", body: `You're averaging ${hrs.toFixed(1)} hours of sleep — ${deficit.toFixed(1)} hours of sleep debt per week. Recovery scores are strongly correlated with total sleep. Aim for 7-8 hours consistently.`, confidence_tier: hrs < 6 ? "high" : "medium", source_type: "rule", source_variables: ["total_sleep_min", "recovery_score"], category: "sleep" };
     },
   },
   {
@@ -112,7 +112,7 @@ const RULES: Rule[] = [
       if (sys.length < 3) return null;
       const a = avg(sys);
       if (a === null || a < 130) return null;
-      return { text: `Your average systolic blood pressure this week is ${a.toFixed(0)} mmHg, which is in the elevated range. Consider monitoring more frequently and discussing with your healthcare provider.`, confidence_tier: a >= 140 ? "high" : "medium", source_type: "rule", source_variables: ["bp_systolic", "bp_diastolic"] };
+      return { title: "Blood Pressure Elevated", body: `Your average systolic blood pressure this week is ${a.toFixed(0)} mmHg, which is in the elevated range. Consider monitoring more frequently and discussing with your healthcare provider.`, confidence_tier: a >= 140 ? "high" : "medium", source_type: "rule", source_variables: ["bp_systolic", "bp_diastolic"], category: "cardiovascular" };
     },
   },
   {
@@ -122,7 +122,7 @@ const RULES: Rule[] = [
       if (recs.length < 5) return null;
       const lowDays = recs.filter((r) => r < 33).length;
       if (lowDays < 3) return null;
-      return { text: `You've had ${lowDays} red recovery days in the last week. Consider prioritizing rest, reducing training intensity, and checking for illness symptoms.`, confidence_tier: lowDays >= 5 ? "high" : "medium", source_type: "rule", source_variables: ["recovery_score"] };
+      return { title: "Consistently Low Recovery", body: `You've had ${lowDays} red recovery days in the last week. Consider prioritizing rest, reducing training intensity, and checking for illness symptoms.`, confidence_tier: lowDays >= 5 ? "high" : "medium", source_type: "rule", source_variables: ["recovery_score"], category: "recovery" };
     },
   },
 ];
@@ -166,12 +166,33 @@ export async function POST(request: NextRequest) {
 
   const today = new Date().toISOString().split("T")[0];
   let inserted = 0;
+  const errors: string[] = [];
+
   for (const r of results) {
-    const { data: existing } = await supabase.from("recommendations").select("id").eq("user_id", user.id).gte("created_at", today + "T00:00:00").ilike("text", r.text.substring(0, 50) + "%").limit(1);
+    // Dedup: check if same title exists today
+    const { data: existing } = await supabase.from("recommendations").select("id").eq("user_id", user.id).eq("title", r.title).gte("created_at", today + "T00:00:00").limit(1);
     if (existing && existing.length > 0) continue;
-    await supabase.from("recommendations").insert({ user_id: user.id, text: r.text, confidence_tier: r.confidence_tier, source_type: r.source_type, source_variables: r.source_variables, dismissed: false, acted_on: false });
-    inserted++;
+
+    const { error } = await supabase.from("recommendations").insert({
+      user_id: user.id,
+      title: r.title,
+      body: r.body,
+      confidence_tier: r.confidence_tier,
+      source_type: r.source_type,
+      source_variables: r.source_variables,
+      category: r.category,
+      is_dismissed: false,
+      is_acted_on: false,
+      generated_at: new Date().toISOString(),
+    });
+
+    if (error) {
+      console.error(`[Alerts] Insert error for ${r.title}:`, error);
+      errors.push(`${r.title}: ${error.message}`);
+    } else {
+      inserted++;
+    }
   }
 
-  return NextResponse.json({ ok: true, rules_evaluated: RULES.length, alerts_generated: results.length, alerts_inserted: inserted });
+  return NextResponse.json({ ok: true, rules_evaluated: RULES.length, alerts_generated: results.length, alerts_inserted: inserted, errors: errors.length > 0 ? errors : undefined });
 }

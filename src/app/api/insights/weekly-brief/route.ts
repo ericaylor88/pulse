@@ -84,12 +84,15 @@ RULES:
     // Store as a recommendation
     await supabase.from("recommendations").insert({
       user_id: user.id,
-      text: briefText,
+      title: "Weekly Health Brief",
+      body: briefText,
       confidence_tier: "medium",
       source_type: "ai_brief",
       source_variables: ["weekly_brief"],
-      dismissed: false,
-      acted_on: false,
+      category: "weekly_brief",
+      is_dismissed: false,
+      is_acted_on: false,
+      generated_at: new Date().toISOString(),
     });
 
     return NextResponse.json({ ok: true, brief: briefText });

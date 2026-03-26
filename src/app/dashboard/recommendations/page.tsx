@@ -24,18 +24,20 @@ import {
   RefreshCw,
 } from "lucide-react";
 
-// ─── Types ───────────────────────────────────────────────────────────────
+// ─── Types (matching actual Supabase schema) ─────────────────────────────
 
 interface Recommendation {
   id: string;
-  text: string;
+  title: string;
+  body: string;
   confidence_tier: string;
-  source_type: string;
+  source_type: string | null;
   source_variables: string[] | null;
-  category: string | null;
-  dismissed: boolean;
-  acted_on: boolean;
+  category: string;
+  is_dismissed: boolean;
+  is_acted_on: boolean;
   created_at: string;
+  generated_at: string;
 }
 
 // ─── Config ──────────────────────────────────────────────────────────────
@@ -66,7 +68,7 @@ function RecommendationCard({
   onActedOn: (id: string) => void;
 }) {
   const tier = TIER_CONFIG[rec.confidence_tier] ?? TIER_CONFIG.low;
-  const source = SOURCE_CONFIG[rec.source_type] ?? SOURCE_CONFIG.rule;
+  const source = SOURCE_CONFIG[rec.source_type ?? "rule"] ?? SOURCE_CONFIG.rule;
   const SourceIcon = source.icon;
 
   const age = Math.floor(
@@ -75,12 +77,13 @@ function RecommendationCard({
   const ageLabel = age === 0 ? "Today" : age === 1 ? "Yesterday" : `${age}d ago`;
 
   return (
-    <Card className={cn("border transition-all", tier.bg, rec.dismissed && "opacity-50")}>
+    <Card className={cn("border transition-all", tier.bg, rec.is_dismissed && "opacity-50")}>
       <CardContent className="p-4 space-y-3">
         <div className="flex items-start gap-3">
           <span className={cn("text-lg mt-0.5", tier.color)}>{tier.icon}</span>
           <div className="flex-1 min-w-0">
-            <p className="text-sm leading-relaxed">{rec.text}</p>
+            <p className="text-sm font-medium mb-1">{rec.title}</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">{rec.body}</p>
           </div>
         </div>
 
@@ -99,7 +102,7 @@ function RecommendationCard({
             </span>
           </div>
 
-          {!rec.dismissed && (
+          {!rec.is_dismissed && (
             <div className="flex items-center gap-1 shrink-0">
               <Button
                 variant="ghost"
@@ -107,7 +110,7 @@ function RecommendationCard({
                 className="h-7 px-2 text-xs text-emerald-500 hover:text-emerald-400"
                 onClick={() => onActedOn(rec.id)}
               >
-                {rec.acted_on ? (
+                {rec.is_acted_on ? (
                   <Check className="h-3.5 w-3.5" />
                 ) : (
                   "Noted"
@@ -170,16 +173,16 @@ export default function RecommendationsPage() {
   useEffect(() => { loadRecommendations(); }, [loadRecommendations]);
 
   const handleDismiss = async (id: string) => {
-    await supabase.from("recommendations").update({ dismissed: true }).eq("id", id);
+    await supabase.from("recommendations").update({ is_dismissed: true }).eq("id", id);
     setRecommendations((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, dismissed: true } : r))
+      prev.map((r) => (r.id === id ? { ...r, is_dismissed: true } : r))
     );
   };
 
   const handleActedOn = async (id: string) => {
-    await supabase.from("recommendations").update({ acted_on: true }).eq("id", id);
+    await supabase.from("recommendations").update({ is_acted_on: true }).eq("id", id);
     setRecommendations((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, acted_on: true } : r))
+      prev.map((r) => (r.id === id ? { ...r, is_acted_on: true } : r))
     );
   };
 
@@ -187,6 +190,8 @@ export default function RecommendationsPage() {
     setGenerating(true);
     try {
       const res = await fetch("/api/insights/generate-alerts", { method: "POST" });
+      const json = await res.json();
+      console.log("[Alerts]", json);
       if (res.ok) await loadRecommendations();
     } catch (err) {
       console.error("Failed to generate alerts:", err);
@@ -194,8 +199,8 @@ export default function RecommendationsPage() {
     setGenerating(false);
   };
 
-  const active = recommendations.filter((r) => !r.dismissed);
-  const dismissed = recommendations.filter((r) => r.dismissed);
+  const active = recommendations.filter((r) => !r.is_dismissed);
+  const dismissed = recommendations.filter((r) => r.is_dismissed);
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 pb-8">
@@ -249,7 +254,6 @@ export default function RecommendationsPage() {
         </Card>
       ) : (
         <>
-          {/* Active recommendations */}
           {active.length > 0 && (
             <div className="space-y-2">
               {active.map((rec) => (
@@ -263,7 +267,6 @@ export default function RecommendationsPage() {
             </div>
           )}
 
-          {/* Dismissed toggle */}
           {dismissed.length > 0 && (
             <div className="space-y-2">
               <button
