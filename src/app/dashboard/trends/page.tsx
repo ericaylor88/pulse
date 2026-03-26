@@ -214,7 +214,7 @@ export default function TrendsPage() {
             .gte("date", startDate)
             .lte("date", end)
             .order("date", { ascending: true });
-          setMetricsData((data as Record<string, unknown>[]) ?? []);
+          setMetricsData((data as unknown as Record<string, unknown>[]) ?? []);
         })()
       );
     } else {
@@ -234,7 +234,7 @@ export default function TrendsPage() {
             .gte("date", startDate)
             .lte("date", end)
             .order("date", { ascending: true });
-          setWeatherData((data as Record<string, unknown>[]) ?? []);
+          setWeatherData((data as unknown as Record<string, unknown>[]) ?? []);
         })()
       );
     } else {
