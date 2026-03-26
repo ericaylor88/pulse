@@ -206,16 +206,16 @@ export default function TrendsPage() {
         .filter((m) => m.table === "daily_metrics")
         .map((m) => m.key);
       promises.push(
-        supabase
-          .from("daily_metrics")
-          .select(`date,${cols.join(",")}`)
-          .eq("user_id", user.id)
-          .gte("date", startDate)
-          .lte("date", end)
-          .order("date", { ascending: true })
-          .then(({ data }) => {
-            setMetricsData((data as Record<string, unknown>[]) ?? []);
-          })
+        (async () => {
+          const { data } = await supabase
+            .from("daily_metrics")
+            .select(`date,${cols.join(",")}`)
+            .eq("user_id", user.id)
+            .gte("date", startDate)
+            .lte("date", end)
+            .order("date", { ascending: true });
+          setMetricsData((data as Record<string, unknown>[]) ?? []);
+        })()
       );
     } else {
       setMetricsData([]);
@@ -226,16 +226,16 @@ export default function TrendsPage() {
         .filter((m) => m.table === "weather_daily")
         .map((m) => m.key);
       promises.push(
-        supabase
-          .from("weather_daily")
-          .select(`date,${cols.join(",")}`)
-          .eq("user_id", user.id)
-          .gte("date", startDate)
-          .lte("date", end)
-          .order("date", { ascending: true })
-          .then(({ data }) => {
-            setWeatherData((data as Record<string, unknown>[]) ?? []);
-          })
+        (async () => {
+          const { data } = await supabase
+            .from("weather_daily")
+            .select(`date,${cols.join(",")}`)
+            .eq("user_id", user.id)
+            .gte("date", startDate)
+            .lte("date", end)
+            .order("date", { ascending: true });
+          setWeatherData((data as Record<string, unknown>[]) ?? []);
+        })()
       );
     } else {
       setWeatherData([]);
