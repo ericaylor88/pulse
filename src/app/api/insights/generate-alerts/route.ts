@@ -11,9 +11,13 @@ interface RuleContext { metrics7d: DailyMetric[]; metrics30d: DailyMetric[]; che
 interface RuleResult { title: string; body: string; confidence_tier: "high" | "medium" | "low"; source_type: "rule" | "genetic"; source_variables: string[]; category: string; }
 interface Rule { id: string; evaluate: (ctx: RuleContext) => RuleResult | null; }
 
-function avg(values: (number | null)[]): number | null {
-  const v = values.filter((x): x is number => x !== null);
+function avg(values: (number | string | null | undefined)[]): number | null {
+  const v = values.map((x) => (x != null ? Number(x) : NaN)).filter((x) => !isNaN(x));
   return v.length === 0 ? null : v.reduce((a, b) => a + b, 0) / v.length;
+}
+
+function toNums(values: unknown[]): number[] {
+  return values.map((x) => (x != null ? Number(x) : NaN)).filter((x) => !isNaN(x));
 }
 
 function geno(genetics: GeneticSNP[], rsid: string): string | null {
@@ -69,7 +73,7 @@ const RULES: Rule[] = [
   {
     id: "hrv_declining",
     evaluate: (ctx) => {
-      const hrv7 = ctx.metrics7d.map((m) => m.hrv_rmssd).filter((v): v is number => v !== null);
+      const hrv7 = toNums(ctx.metrics7d.map((m) => m.hrv_rmssd));
       if (hrv7.length < 5) return null;
       const a30 = avg(ctx.metrics30d.map((m) => m.hrv_rmssd));
       const a7 = avg(hrv7);
@@ -82,7 +86,7 @@ const RULES: Rule[] = [
   {
     id: "rhr_elevated",
     evaluate: (ctx) => {
-      const rhr7 = ctx.metrics7d.map((m) => m.resting_hr).filter((v): v is number => v !== null);
+      const rhr7 = toNums(ctx.metrics7d.map((m) => m.resting_hr));
       if (rhr7.length < 5) return null;
       const a30 = avg(ctx.metrics30d.map((m) => m.resting_hr));
       const a7 = avg(rhr7);
@@ -95,7 +99,7 @@ const RULES: Rule[] = [
   {
     id: "sleep_debt",
     evaluate: (ctx) => {
-      const mins = ctx.metrics7d.map((m) => m.total_sleep_min).filter((v): v is number => v !== null);
+      const mins = toNums(ctx.metrics7d.map((m) => m.total_sleep_min));
       if (mins.length < 5) return null;
       const a = avg(mins);
       if (a === null) return null;
@@ -108,7 +112,7 @@ const RULES: Rule[] = [
   {
     id: "bp_elevated",
     evaluate: (ctx) => {
-      const sys = ctx.metrics7d.map((m) => m.bp_systolic).filter((v): v is number => v !== null);
+      const sys = toNums(ctx.metrics7d.map((m) => m.bp_systolic));
       if (sys.length < 3) return null;
       const a = avg(sys);
       if (a === null || a < 130) return null;
@@ -118,7 +122,7 @@ const RULES: Rule[] = [
   {
     id: "recovery_low",
     evaluate: (ctx) => {
-      const recs = ctx.metrics7d.map((m) => m.recovery_score).filter((v): v is number => v !== null);
+      const recs = toNums(ctx.metrics7d.map((m) => m.recovery_score));
       if (recs.length < 5) return null;
       const lowDays = recs.filter((r) => r < 33).length;
       if (lowDays < 3) return null;
