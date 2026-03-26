@@ -25,7 +25,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarRail
+  SidebarRail,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { navItems } from '@/config/nav-config';
 import { useMediaQuery } from '@/hooks/use-media-query';
@@ -43,7 +44,9 @@ import { Icons } from '../icons';
 export default function AppSidebar() {
   const pathname = usePathname();
   const { isOpen } = useMediaQuery();
+  const { state } = useSidebar();
   const itemsToShow = useFilteredNavItems(navItems);
+  const isCollapsed = state === 'collapsed';
 
   React.useEffect(() => {
     // Side effects based on sidebar state changes
@@ -58,7 +61,68 @@ export default function AppSidebar() {
           <SidebarMenu>
             {itemsToShow.map((item) => {
               const Icon = item.icon ? Icons[item.icon] : Icons.logo;
-              return item?.items && item?.items?.length > 0 ? (
+              const hasSubItems = item?.items && item.items.length > 0;
+
+              if (!hasSubItems) {
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      tooltip={item.title}
+                      isActive={pathname === item.url}
+                    >
+                      <Link href={item.url}>
+                        <Icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              }
+
+              // Collapsed: use DropdownMenu so sub-items are accessible
+              if (isCollapsed) {
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <SidebarMenuButton
+                          tooltip={item.title}
+                          isActive={
+                            item.items?.some((sub) => pathname === sub.url) ??
+                            false
+                          }
+                        >
+                          {item.icon && <Icon />}
+                          <span>{item.title}</span>
+                          <IconChevronRight className='ml-auto' />
+                        </SidebarMenuButton>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        side='right'
+                        align='start'
+                        sideOffset={4}
+                        className='min-w-44 rounded-lg'
+                      >
+                        <DropdownMenuLabel className='text-xs text-muted-foreground'>
+                          {item.title}
+                        </DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {item.items?.map((subItem) => (
+                          <DropdownMenuItem key={subItem.title} asChild>
+                            <Link href={subItem.url}>
+                              <span>{subItem.title}</span>
+                            </Link>
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </SidebarMenuItem>
+                );
+              }
+
+              // Expanded: use Collapsible
+              return (
                 <Collapsible
                   key={item.title}
                   asChild
@@ -69,7 +133,10 @@ export default function AppSidebar() {
                     <CollapsibleTrigger asChild>
                       <SidebarMenuButton
                         tooltip={item.title}
-                        isActive={pathname === item.url}
+                        isActive={
+                          item.items?.some((sub) => pathname === sub.url) ??
+                          false
+                        }
                       >
                         {item.icon && <Icon />}
                         <span>{item.title}</span>
@@ -94,19 +161,6 @@ export default function AppSidebar() {
                     </CollapsibleContent>
                   </SidebarMenuItem>
                 </Collapsible>
-              ) : (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    tooltip={item.title}
-                    isActive={pathname === item.url}
-                  >
-                    <Link href={item.url}>
-                      <Icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
               );
             })}
           </SidebarMenu>
