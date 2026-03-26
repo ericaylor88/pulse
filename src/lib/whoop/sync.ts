@@ -31,28 +31,33 @@ interface DeviceRecord {
   token_expires_at: string | null;
 }
 
+/**
+ * Matches the actual daily_metrics table schema in Supabase.
+ * Sleep values stored in MINUTES (WHOOP returns ms, we convert).
+ * Calories stored in kcal (WHOOP returns kJ, we convert).
+ */
 interface DailyMetricsRow {
   user_id: string;
   date: string;
+  // Recovery
   recovery_score: number | null;
   hrv_rmssd_ms: number | null;
-  resting_heart_rate: number | null;
+  resting_hr_bpm: number | null;
   spo2_pct: number | null;
-  skin_temp_celsius: number | null;
-  sleep_duration_ms: number | null;
-  sleep_light_ms: number | null;
-  sleep_sws_ms: number | null;
-  sleep_rem_ms: number | null;
-  sleep_awake_ms: number | null;
-  sleep_performance_pct: number | null;
-  sleep_efficiency_pct: number | null;
-  sleep_consistency_pct: number | null;
+  skin_temp_c: number | null;
   respiratory_rate: number | null;
-  sleep_disturbance_count: number | null;
-  strain: number | null;
-  calories_kj: number | null;
-  avg_heart_rate: number | null;
-  max_heart_rate: number | null;
+  // Sleep (in minutes)
+  sleep_total_min: number | null;
+  sleep_rem_min: number | null;
+  sleep_deep_min: number | null;
+  sleep_light_min: number | null;
+  sleep_awake_min: number | null;
+  sleep_efficiency: number | null;
+  // Strain
+  strain_score: number | null;
+  calories_total: number | null;
+  // Source tracking
+  source_devices: string[];
 }
 
 export interface SyncResult {
@@ -60,6 +65,16 @@ export interface SyncResult {
   days_synced: number;
   date_range: { start: string; end: string } | null;
   errors: string[];
+}
+
+/** ms → minutes, rounded to 1 decimal */
+function msToMin(ms: number): number {
+  return Math.round((ms / 60000) * 10) / 10;
+}
+
+/** kJ → kcal, rounded to 1 decimal */
+function kjToKcal(kj: number): number {
+  return Math.round(kj * 0.239006 * 10) / 10;
 }
 
 function toCalendarDate(isoTimestamp: string, tzOffset?: string): string {
@@ -161,63 +176,68 @@ export async function syncWhoopDevice(
       cycleByDate.set(date, c);
     }
 
-    const allDates = new Set<string>([
-      ...Array.from(recoveryByDate.keys()),
-      ...Array.from(sleepByDate.keys()),
-      ...Array.from(cycleByDate.keys()),
-    ]);
+    const allDates = new Set<string>(
+      Array.from(recoveryByDate.keys())
+        .concat(Array.from(sleepByDate.keys()))
+        .concat(Array.from(cycleByDate.keys()))
+    );
 
     if (allDates.size === 0) {
       console.log(`[WHOOP Sync] No scored data found in range`);
       return result;
     }
 
-    // Build daily_metrics rows
+    // Build daily_metrics rows with correct column names
     const rows: DailyMetricsRow[] = [];
 
-    for (const date of allDates) {
+    for (const date of Array.from(allDates)) {
       const recovery = recoveryByDate.get(date);
       const sleep = sleepByDate.get(date);
       const cycle = cycleByDate.get(date);
 
+      const sleepStages = sleep?.score?.stage_summary;
+      const totalSleepMs = sleepStages
+        ? sleepStages.total_in_bed_time_milli -
+          sleepStages.total_awake_time_milli
+        : null;
+
       rows.push({
         user_id: device.user_id,
         date,
+        // Recovery
         recovery_score: recovery?.score?.recovery_score ?? null,
         hrv_rmssd_ms: recovery?.score?.hrv_rmssd_milli ?? null,
-        resting_heart_rate: recovery?.score?.resting_heart_rate ?? null,
+        resting_hr_bpm: recovery?.score?.resting_heart_rate ?? null,
         spo2_pct: recovery?.score?.spo2_percentage ?? null,
-        skin_temp_celsius: recovery?.score?.skin_temp_celsius ?? null,
-        sleep_duration_ms:
-          sleep?.score?.stage_summary
-            ? sleep.score.stage_summary.total_in_bed_time_milli -
-              sleep.score.stage_summary.total_awake_time_milli
-            : null,
-        sleep_light_ms:
-          sleep?.score?.stage_summary?.total_light_sleep_time_milli ?? null,
-        sleep_sws_ms:
-          sleep?.score?.stage_summary?.total_slow_wave_sleep_time_milli ?? null,
-        sleep_rem_ms:
-          sleep?.score?.stage_summary?.total_rem_sleep_time_milli ?? null,
-        sleep_awake_ms:
-          sleep?.score?.stage_summary?.total_awake_time_milli ?? null,
-        sleep_performance_pct:
-          sleep?.score?.sleep_performance_percentage ?? null,
-        sleep_efficiency_pct:
-          sleep?.score?.sleep_efficiency_percentage ?? null,
-        sleep_consistency_pct:
-          sleep?.score?.sleep_consistency_percentage ?? null,
+        skin_temp_c: recovery?.score?.skin_temp_celsius ?? null,
         respiratory_rate: sleep?.score?.respiratory_rate ?? null,
-        sleep_disturbance_count:
-          sleep?.score?.stage_summary?.disturbance_count ?? null,
-        strain: cycle?.score?.strain ?? null,
-        calories_kj: cycle?.score?.kilojoule ?? null,
-        avg_heart_rate: cycle?.score?.average_heart_rate ?? null,
-        max_heart_rate: cycle?.score?.max_heart_rate ?? null,
+        // Sleep — convert ms → minutes
+        sleep_total_min: totalSleepMs !== null ? msToMin(totalSleepMs) : null,
+        sleep_rem_min: sleepStages
+          ? msToMin(sleepStages.total_rem_sleep_time_milli)
+          : null,
+        sleep_deep_min: sleepStages
+          ? msToMin(sleepStages.total_slow_wave_sleep_time_milli)
+          : null,
+        sleep_light_min: sleepStages
+          ? msToMin(sleepStages.total_light_sleep_time_milli)
+          : null,
+        sleep_awake_min: sleepStages
+          ? msToMin(sleepStages.total_awake_time_milli)
+          : null,
+        sleep_efficiency:
+          sleep?.score?.sleep_efficiency_percentage ?? null,
+        // Strain
+        strain_score: cycle?.score?.strain ?? null,
+        calories_total: cycle?.score?.kilojoule
+          ? kjToKcal(cycle.score.kilojoule)
+          : null,
+        // Source tracking
+        source_devices: ["whoop"],
       });
     }
 
-    // Upsert
+    // Upsert into daily_metrics
     const { error: upsertError } = await supabaseAdmin
       .from("daily_metrics")
       .upsert(rows, {
@@ -230,7 +250,7 @@ export async function syncWhoopDevice(
       console.error(`[WHOOP Sync] Upsert error:`, upsertError);
     } else {
       result.days_synced = rows.length;
-      const sortedDates = [...allDates].sort();
+      const sortedDates = Array.from(allDates).sort();
       result.date_range = {
         start: sortedDates[0],
         end: sortedDates[sortedDates.length - 1],
