@@ -331,7 +331,7 @@ async def compute_correlations(req: CorrelationRequest, bg: BackgroundTasks):
             "lag_days": r.lag_days,
             "r_value": r.r_value,
             "p_value": r.p_value,
-            "n": r.n,
+            "n_observations": r.n,
             "effect_size": r.effect_size,
             "confidence_tier": r.confidence_tier,
             "method": r.method,
