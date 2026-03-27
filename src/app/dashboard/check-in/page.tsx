@@ -87,8 +87,8 @@ function ToggleCard({
  "relative flex flex-col items-center justify-center gap-2 rounded-xl border-2 p-4 transition-all duration-200",
  "hover:scale-[1.02] active:scale-[0.98] cursor-pointer",
  active
- ? "border-emerald-500 bg-emerald-500/10 "
- : "border-border bg-transparent hover:"
+ ? "border-[var(--pulse-emerald)] bg-[var(--pulse-emerald-muted)]"
+ : "border-[var(--pulse-border-default)] bg-transparent hover:border-[var(--pulse-text-tertiary)]"
  )}
  >
  {active && (
@@ -100,7 +100,7 @@ function ToggleCard({
  <span
  className={cn(
  "text-sm font-medium",
- active ? "" : ""
+ active ? "text-[var(--pulse-text-primary)]" : "text-[var(--pulse-text-secondary)]"
  )}
  >
  {habit.label}
@@ -132,7 +132,7 @@ function QuantityCard({
  <span className="text-2xl">{habit.emoji}</span>
  <div>
  <p className="font-medium text-sm">{habit.label}</p>
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}">
+ <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}>
  {value} {habit.unit}
  </p>
  </div>
@@ -180,7 +180,7 @@ function QuantityCard({
 
  {habit.timeField && value > 0 && (
  <div className="mt-3 flex items-center gap-3 border-t pt-3">
- <Label className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} whitespace-nowrap">
+ <Label className="text-xs" className="whitespace-nowrap" style={{ color: "var(--pulse-text-secondary)" }}>
  {habit.timeField.label}
  </Label>
  <Select
@@ -336,7 +336,7 @@ export default function CheckInPage() {
 
  {loading ? (
  <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed p-8">
- <div className="h-6 w-6 animate-spin rounded-full border-2 border-muted-foreground border-t-transparent" />
+ <div className="h-6 w-6 animate-spin rounded-full border-2 border-[var(--pulse-text-tertiary)] border-t-transparent" />
  </div>
  ) : (
  <div className="mx-auto w-full max-w-lg space-y-6 pb-20">
@@ -389,7 +389,8 @@ export default function CheckInPage() {
  </div>
 
  {/* ── Save button ──────────────────────────────────── */}
- <div className="fixed bottom-0 left-0 right-0 z-50 border-t  p-4 backdrop-blur-sm">
+ <div className="fixed bottom-0 left-0 right-0 z-50 p-4 backdrop-blur-sm"
+             style={{ background: "var(--pulse-glass-bg)", borderTop: "1px solid var(--pulse-border-subtle)" }}>
  <div className="mx-auto max-w-lg">
  <Button
  onClick={handleSave}
