@@ -108,7 +108,7 @@ function metricLabel(key: string): string {
 const TIER_CONFIG: Record<string, { color: string; bgColor: string; label: string }> = {
  high: { color: "text-pulse-emerald", bgColor: "", label: "High Confidence" },
  medium: { color: "text-pulse-amber", bgColor: "", label: "Medium Confidence" },
- low: { color: "text-pulse-text-secondary", bgColor: " border-border", label: "Low Confidence" },
+ low: { color: "text-pulse-text-secondary", bgColor: " border-[var(--pulse-border-default)]", label: "Low Confidence" },
 };
 
 // ─── Correlation Detail Card ─────────────────────────────────────────────
@@ -135,11 +135,11 @@ function CorrelationDetail({ corr }: { corr: Correlation }) {
  {metricLabel(corr.variable_a)} → {metricLabel(corr.variable_b)}
  </p>
  {corr.lag_days > 0 && (
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}">{corr.lag_days}-day lag</p>
+ <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}>{corr.lag_days}-day lag</p>
  )}
  </div>
  <div className="text-right shrink-0">
- <p className={cn("text-xl font-bold tabular-nums", tier.color)}>
+ <p style={{ fontFamily: "var(--font-data)" }} className={cn("text-xl font-bold tabular-nums", tier.color)}>
  r = {corr.r_value.toFixed(3)}
  </p>
  <Badge variant="outline" className={cn("text-[10px]", tier.color)}>
@@ -148,7 +148,7 @@ function CorrelationDetail({ corr }: { corr: Correlation }) {
  </div>
  </div>
 
- <div className="flex items-center gap-2 text-xs" style={{ color: "var(--pulse-text-secondary)" }}">
+ <div className="flex items-center gap-2 text-xs" style={{ color: "var(--pulse-text-secondary)" }}>
  {isPositive ? (
  <TrendingUp className="h-3.5 w-3.5 text-pulse-emerald" />
  ) : (
@@ -301,10 +301,14 @@ export default function CorrelationsPage() {
  return (
  <div className="flex flex-1 flex-col gap-6 p-4 pt-0 pb-8 lg:p-6 lg:pt-0">
  {/* Header + Action Buttons */}
- <div className="flex items-start justify-between gap-4">
+ <motion.div
+       initial={{ opacity: 0, y: 8 }}
+       animate={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.2 }}
+       className="flex items-start justify-between gap-4">
  <div>
  <h2 className="text-[30px] font-bold" style={{ color: "var(--pulse-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>Correlations</h2>
- <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}">
+ <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Discover what actually affects your recovery, sleep, and health
  </p>
  </div>
@@ -318,7 +322,7 @@ export default function CorrelationsPage() {
  {computing ? "Computing..." : "Run Correlation Engine"}
  </Button>
  </div>
- </div>
+ </motion.div>
 
  {/* Compute result feedback */}
  {computeResult && (
@@ -327,7 +331,7 @@ export default function CorrelationsPage() {
  {computeResult.error ? (
  <p className="text-sm text-pulse-coral">{computeResult.error}</p>
  ) : computeResult.message ? (
- <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}">{computeResult.message}</p>
+ <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>{computeResult.message}</p>
  ) : (
  <div className="space-y-2">
  <p className="text-sm text-pulse-emerald font-medium">
@@ -378,7 +382,7 @@ export default function CorrelationsPage() {
 
  {loading ? (
  <div className="flex flex-1 items-center justify-center">
- <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "var(--pulse-text-tertiary)", borderTopColor: "transparent" }}" />
+ <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "var(--pulse-text-tertiary)", borderTopColor: "transparent" }} />
  </div>
  ) : correlations.length === 0 ? (
  <Card style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
@@ -386,7 +390,7 @@ export default function CorrelationsPage() {
  <BarChart3 className="h-12 w-12 text-pulse-text-secondary/30" />
  <div>
  <p className="text-sm font-medium">No correlations computed yet</p>
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} mt-1 max-w-sm">
+ <p className="text-xs" className="mt-1 max-w-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Click <strong>Run Correlation Engine</strong> above to analyze your health data.
  The engine needs at least 60 days of data to find statistically significant patterns.
  </p>
@@ -394,15 +398,15 @@ export default function CorrelationsPage() {
  <div className="grid grid-cols-3 gap-4 mt-2 text-center">
  <div>
  <p className="text-lg font-bold tabular-nums text-pulse-emerald">90+</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">days for High confidence</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>days for High confidence</p>
  </div>
  <div>
  <p className="text-lg font-bold tabular-nums text-pulse-amber">60–90</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">days for Medium</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>days for Medium</p>
  </div>
  <div>
  <p className="text-lg font-bold tabular-nums text-pulse-text-secondary">{"<60"}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">days = Low</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>days = Low</p>
  </div>
  </div>
  <Button onClick={handleComputeCorrelations} disabled={computing} className="mt-2">
@@ -417,26 +421,26 @@ export default function CorrelationsPage() {
  <div className="grid grid-cols-4 gap-2">
  <Card style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-3 text-center">
- <p className="text-2xl font-bold tabular-nums">{correlations.length}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Pairs Tested</p>
+ <p className="text-2xl font-bold tabular-nums" style={{ fontFamily: "var(--font-data)" }}>{correlations.length}</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Pairs Tested</p>
  </CardContent>
  </Card>
  <Card className="" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-3 text-center">
- <p className="text-2xl font-bold tabular-nums text-pulse-emerald">{highCount}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">High Confidence</p>
+ <p className="text-2xl font-bold tabular-nums text-pulse-emerald" style={{ fontFamily: "var(--font-data)" }}>{highCount}</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>High Confidence</p>
  </CardContent>
  </Card>
  <Card className="" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-3 text-center">
- <p className="text-2xl font-bold tabular-nums text-pulse-amber">{medCount}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Medium</p>
+ <p className="text-2xl font-bold tabular-nums text-pulse-amber" style={{ fontFamily: "var(--font-data)" }}>{medCount}</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Medium</p>
  </CardContent>
  </Card>
  <Card style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-3 text-center">
  <p className="text-2xl font-bold tabular-nums">{correlations.length - highCount - medCount}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Low</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Low</p>
  </CardContent>
  </Card>
  </div>
@@ -449,7 +453,7 @@ export default function CorrelationsPage() {
  <CardContent className="p-4">
  <div className="flex items-center gap-2 mb-1">
  <TrendingUp className="h-4 w-4 text-pulse-emerald" />
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}">Strongest Positive</p>
+ <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}>Strongest Positive</p>
  </div>
  <p className="text-sm font-medium">
  {metricLabel(strongestPositive.variable_a)} → {metricLabel(strongestPositive.variable_b)}
@@ -465,7 +469,7 @@ export default function CorrelationsPage() {
  <CardContent className="p-4">
  <div className="flex items-center gap-2 mb-1">
  <TrendingDown className="h-4 w-4 text-pulse-coral" />
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}">Strongest Negative</p>
+ <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}>Strongest Negative</p>
  </div>
  <p className="text-sm font-medium">
  {metricLabel(strongestNegative.variable_a)} → {metricLabel(strongestNegative.variable_b)}
@@ -481,7 +485,7 @@ export default function CorrelationsPage() {
 
  {/* Filter and sort controls */}
  <div className="flex items-center gap-2 flex-wrap">
- <span className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}">Filter:</span>
+ <span className="text-xs" style={{ color: "var(--pulse-text-secondary)" }}>Filter:</span>
  {[null, "high", "medium", "low"].map((tier) => (
  <button
  key={tier ?? "all"}
@@ -490,13 +494,13 @@ export default function CorrelationsPage() {
  "rounded-full border px-3 py-1 text-xs font-medium transition-all",
  filterTier === tier
  ? " text-pulse-text-primary"
- : "border-border text-pulse-text-secondary hover:text-pulse-text-primary"
+ : "border-[var(--pulse-border-default)] text-pulse-text-secondary hover:text-pulse-text-primary"
  )}
  >
  {tier ? TIER_CONFIG[tier].label : "All"}
  </button>
  ))}
- <span className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} ml-2">Sort:</span>
+ <span className="text-xs" className="ml-2" style={{ color: "var(--pulse-text-secondary)" }}>Sort:</span>
  {([["r_value", "|r|"], ["p_value", "p-value"], ["n", "Sample"]] as const).map(([key, label]) => (
  <button
  key={key}
@@ -505,7 +509,7 @@ export default function CorrelationsPage() {
  "rounded-full border px-3 py-1 text-xs font-medium transition-all",
  sortBy === key
  ? " text-pulse-text-primary"
- : "border-border text-pulse-text-secondary hover:text-pulse-text-primary"
+ : "border-[var(--pulse-border-default)] text-pulse-text-secondary hover:text-pulse-text-primary"
  )}
  >
  {label}
@@ -524,7 +528,7 @@ export default function CorrelationsPage() {
  <Card className="border-dashed" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-4 flex gap-3">
  <Info className="h-4 w-4 text-pulse-text-secondary shrink-0 mt-0.5" />
- <div className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} space-y-1">
+ <div className="text-xs" className="space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
  <p>
  <strong>Correlation ≠ causation.</strong> These are statistical
  associations based on your personal data. They suggest patterns
