@@ -49,10 +49,10 @@ def get_supabase() -> Client:
 # ─── Metric config ───────────────────────────────────────────────────────
 
 CONTINUOUS_METRICS = [
-    "recovery_score", "hrv_rmssd", "resting_hr", "sleep_score",
-    "total_sleep_min", "deep_sleep_min", "rem_sleep_min",
+    "recovery_score", "hrv_rmssd_ms", "resting_hr_bpm", "sleep_efficiency",
+    "sleep_total_min", "sleep_deep_min", "sleep_rem_min", "sleep_light_min",
     "strain_score", "calories_total", "spo2_pct", "skin_temp_c",
-    "weight_kg", "body_fat_pct", "muscle_mass_kg",
+    "respiratory_rate", "weight_kg", "body_fat_pct", "muscle_mass_kg",
     "bp_systolic", "bp_diastolic",
 ]
 
@@ -134,8 +134,9 @@ def run_correlations(user_id: str, min_days: int, max_lag: int) -> list[Correlat
     df_checkins = pd.DataFrame(checkins_resp.data).set_index("date") if checkins_resp.data else pd.DataFrame()
     df_weather = pd.DataFrame(weather_resp.data).set_index("date") if weather_resp.data else pd.DataFrame()
 
-    # Merge on date
-    df = df_metrics[CONTINUOUS_METRICS].copy()
+    # Merge on date — only select columns that exist
+    available_metrics = [c for c in CONTINUOUS_METRICS if c in df_metrics.columns]
+    df = df_metrics[available_metrics].copy()
 
     if not df_checkins.empty:
         habit_cols = [c for c in BINARY_HABITS + QUANTITY_HABITS if c in df_checkins.columns]
@@ -156,13 +157,13 @@ def run_correlations(user_id: str, min_days: int, max_lag: int) -> list[Correlat
     results: list[CorrelationResult] = []
 
     # Define pairs to test
-    outcome_vars = ["recovery_score", "hrv_rmssd", "resting_hr", "sleep_score",
-                    "total_sleep_min", "deep_sleep_min", "strain_score"]
+    outcome_vars = ["recovery_score", "hrv_rmssd_ms", "resting_hr_bpm", "sleep_efficiency",
+                    "sleep_total_min", "sleep_deep_min", "strain_score"]
 
     predictor_vars = (
         BINARY_HABITS + QUANTITY_HABITS +
         [m for m in WEATHER_METRICS if m in df.columns] +
-        ["strain_score", "total_sleep_min", "deep_sleep_min"]
+        ["strain_score", "sleep_total_min", "sleep_deep_min"]
     )
 
     tested_pairs = set()
