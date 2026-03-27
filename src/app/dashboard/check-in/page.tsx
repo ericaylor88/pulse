@@ -180,7 +180,7 @@ function QuantityCard({
 
  {habit.timeField && value > 0 && (
  <div className="mt-3 flex items-center gap-3 border-t pt-3">
- <Label className="text-xs" className="whitespace-nowrap" style={{ color: "var(--pulse-text-secondary)" }}>
+ <Label className="text-xs whitespace-nowrap" style={{ color: "var(--pulse-text-secondary)" }}>
  {habit.timeField.label}
  </Label>
  <Select
