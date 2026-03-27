@@ -10,6 +10,7 @@ import {
   Merriweather,
   Mulish,
   Playfair_Display,
+  Plus_Jakarta_Sans,
   Noto_Sans_Mono,
   Outfit,
   Space_Mono
@@ -25,6 +26,13 @@ const fontSans = Geist({
 const fontMono = Geist_Mono({
   subsets: ['latin'],
   variable: '--font-mono'
+});
+
+const fontPlusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-plus-jakarta-sans',
+  display: 'swap',
+  weight: ['400', '500', '600', '700', '800']
 });
 
 const fontInstrument = Instrument_Sans({
@@ -93,6 +101,7 @@ const fontPlayfairDisplay = Playfair_Display({
 export const fontVariables = cn(
   fontSans.variable,
   fontMono.variable,
+  fontPlusJakartaSans.variable,
   fontInstrument.variable,
   fontNotoMono.variable,
   fontMullish.variable,
