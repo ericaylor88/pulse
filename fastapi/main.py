@@ -355,6 +355,235 @@ async def compute_correlations(req: CorrelationRequest, bg: BackgroundTasks):
     }
 
 
+class IllnessPatternRequest(BaseModel):
+    user_id: str
+    pre_illness_days: int = 5
+    baseline_days: int = 30
+
+
+# ─── Illness pattern detection ────────────────────────────────────────────
+
+PRE_ILLNESS_METRICS = [
+    "recovery_score", "hrv_rmssd_ms", "resting_hr_bpm", "skin_temp_c",
+    "sleep_total_min", "sleep_deep_min", "sleep_efficiency", "spo2_pct",
+    "respiratory_rate",
+]
+
+PRE_ILLNESS_LABELS = {
+    "recovery_score": "Recovery Score",
+    "hrv_rmssd_ms": "HRV (ms)",
+    "resting_hr_bpm": "Resting HR (bpm)",
+    "skin_temp_c": "Skin Temp (°C)",
+    "sleep_total_min": "Total Sleep (min)",
+    "sleep_deep_min": "Deep Sleep (min)",
+    "sleep_efficiency": "Sleep Efficiency",
+    "spo2_pct": "SpO2 (%)",
+    "respiratory_rate": "Respiratory Rate",
+}
+
+
+def run_illness_pattern_analysis(user_id: str, pre_days: int, baseline_days: int) -> dict:
+    sb = get_supabase()
+
+    # Fetch illness log
+    illness_resp = sb.table("illness_log").select("*").eq("user_id", user_id).order("start_date", desc=True).execute()
+    if not illness_resp.data:
+        return {"ok": True, "message": "No illness events logged yet.", "events_analyzed": 0, "patterns": []}
+
+    illnesses = illness_resp.data
+
+    # Fetch all daily metrics
+    metrics_resp = sb.table("daily_metrics").select("*").eq("user_id", user_id).order("date").execute()
+    if not metrics_resp.data:
+        return {"ok": True, "message": "No daily metrics available.", "events_analyzed": 0, "patterns": []}
+
+    df_all = pd.DataFrame(metrics_resp.data)
+    df_all["date"] = pd.to_datetime(df_all["date"])
+    df_all = df_all.set_index("date").sort_index()
+
+    # Identify illness date ranges (to exclude from baseline)
+    illness_dates = set()
+    for illness in illnesses:
+        start = pd.Timestamp(illness["start_date"])
+        end = pd.Timestamp(illness["end_date"]) if illness.get("end_date") else start + pd.Timedelta(days=7)
+        current = start
+        while current <= end:
+            illness_dates.add(current)
+            current += pd.Timedelta(days=1)
+
+    # Compute personal baseline (excluding illness periods and pre-illness windows)
+    exclusion_dates = set()
+    for illness in illnesses:
+        start = pd.Timestamp(illness["start_date"])
+        for d in range(pre_days + 1):
+            exclusion_dates.add(start - pd.Timedelta(days=d))
+        end = pd.Timestamp(illness["end_date"]) if illness.get("end_date") else start + pd.Timedelta(days=7)
+        current = start
+        while current <= end:
+            exclusion_dates.add(current)
+            current += pd.Timedelta(days=1)
+
+    baseline_mask = ~df_all.index.isin(exclusion_dates)
+    df_baseline = df_all[baseline_mask]
+
+    available_metrics = [m for m in PRE_ILLNESS_METRICS if m in df_all.columns]
+    baseline_stats = {}
+    for m in available_metrics:
+        vals = pd.to_numeric(df_baseline[m], errors="coerce").dropna()
+        if len(vals) >= 14:
+            baseline_stats[m] = {"mean": float(vals.mean()), "std": float(vals.std()), "n": len(vals)}
+
+    if not baseline_stats:
+        return {"ok": True, "message": "Not enough baseline data.", "events_analyzed": 0, "patterns": []}
+
+    # Analyze pre-illness windows
+    events_analyzed = 0
+    per_event_deviations = []
+
+    for illness in illnesses:
+        onset = pd.Timestamp(illness["start_date"])
+        pre_start = onset - pd.Timedelta(days=pre_days)
+        pre_end = onset - pd.Timedelta(days=1)  # day before onset
+
+        pre_window = df_all.loc[pre_start:pre_end]
+        if len(pre_window) < 2:
+            continue
+
+        events_analyzed += 1
+        event_devs = {}
+
+        for m in available_metrics:
+            if m not in baseline_stats:
+                continue
+            vals = pd.to_numeric(pre_window[m], errors="coerce").dropna()
+            if len(vals) < 2:
+                continue
+            pre_mean = float(vals.mean())
+            base_mean = baseline_stats[m]["mean"]
+            base_std = baseline_stats[m]["std"]
+            if base_std > 0:
+                z_score = (pre_mean - base_mean) / base_std
+                pct_change = ((pre_mean - base_mean) / base_mean) * 100 if base_mean != 0 else 0
+                event_devs[m] = {
+                    "pre_mean": round(pre_mean, 2),
+                    "baseline_mean": round(base_mean, 2),
+                    "z_score": round(z_score, 2),
+                    "pct_change": round(pct_change, 1),
+                }
+
+        per_event_deviations.append({
+            "illness_date": illness["start_date"],
+            "illness_type": illness.get("illness_type", "unknown"),
+            "severity": illness.get("severity", 0),
+            "deviations": event_devs,
+        })
+
+    # Find consistent patterns across events
+    patterns = []
+    if events_analyzed >= 1:
+        metric_consistency = {}
+        for m in available_metrics:
+            if m not in baseline_stats:
+                continue
+            directions = []
+            z_scores = []
+            pct_changes = []
+
+            for event in per_event_deviations:
+                if m in event["deviations"]:
+                    dev = event["deviations"][m]
+                    z = dev["z_score"]
+                    z_scores.append(z)
+                    pct_changes.append(dev["pct_change"])
+                    directions.append("up" if z > 0 else "down")
+
+            if not z_scores:
+                continue
+
+            # Check consistency: all in same direction with |z| > 0.5
+            same_dir = len(set(directions)) == 1
+            avg_z = float(np.mean(z_scores))
+            avg_pct = float(np.mean(pct_changes))
+            significant = all(abs(z) > 0.5 for z in z_scores)
+
+            if significant and same_dir:
+                direction = directions[0]
+                label = PRE_ILLNESS_LABELS.get(m, m)
+
+                # Confidence tier
+                if events_analyzed >= 4 and abs(avg_z) > 1.0:
+                    tier = "high"
+                elif events_analyzed >= 2 and abs(avg_z) > 0.7:
+                    tier = "medium"
+                else:
+                    tier = "low"
+
+                patterns.append({
+                    "metric": m,
+                    "label": label,
+                    "direction": direction,
+                    "avg_z_score": round(avg_z, 2),
+                    "avg_pct_change": round(avg_pct, 1),
+                    "events_showing_pattern": len(z_scores),
+                    "total_events": events_analyzed,
+                    "consistency": f"{len(z_scores)}/{events_analyzed}",
+                    "confidence_tier": tier,
+                })
+
+        patterns.sort(key=lambda x: abs(x["avg_z_score"]), reverse=True)
+
+    return {
+        "ok": True,
+        "events_analyzed": events_analyzed,
+        "baseline_days": int(baseline_mask.sum()),
+        "patterns": patterns,
+        "per_event_details": per_event_deviations,
+    }
+
+
+@app.post("/illness-patterns/analyze")
+async def analyze_illness_patterns(req: IllnessPatternRequest):
+    result = run_illness_pattern_analysis(req.user_id, req.pre_illness_days, req.baseline_days)
+
+    # If patterns found, store as recommendations
+    if result["patterns"]:
+        sb = get_supabase()
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        for pattern in result["patterns"]:
+            direction_word = "increases" if pattern["direction"] == "up" else "decreases"
+            body = (
+                f"Across {pattern['events_showing_pattern']} of {pattern['total_events']} illness events, "
+                f"your {pattern['label']} {direction_word} by an average of "
+                f"{abs(pattern['avg_pct_change'])}% ({pattern['avg_z_score']:+.1f} std deviations) "
+                f"in the {req.pre_illness_days} days before getting sick. "
+                f"Watch for this pattern as an early warning sign."
+            )
+
+            # Dedup check
+            existing = sb.table("recommendations").select("id").eq("user_id", req.user_id).eq(
+                "title", f"Pre-Illness Pattern: {pattern['label']}"
+            ).gte("created_at", today + "T00:00:00").limit(1).execute()
+
+            if existing.data:
+                continue
+
+            sb.table("recommendations").insert({
+                "user_id": req.user_id,
+                "title": f"Pre-Illness Pattern: {pattern['label']}",
+                "body": body,
+                "confidence_tier": pattern["confidence_tier"],
+                "source_type": "rule",
+                "source_variables": [pattern["metric"]],
+                "category": "illness",
+                "is_dismissed": False,
+                "is_acted_on": False,
+                "generated_at": datetime.now().isoformat(),
+            }).execute()
+
+    return result
+
+
 @app.post("/anomalies/detect")
 async def detect_anomalies(req: AnomalyRequest):
     anomalies = run_anomaly_detection(req.user_id, req.lookback_days, req.contamination)
