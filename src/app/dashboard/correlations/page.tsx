@@ -30,7 +30,7 @@ interface Correlation {
   lag_days: number;
   r_value: number;
   p_value: number;
-  n: number;
+  n_observations: number;
   effect_size: string;
   confidence_tier: string;
   method: string;
@@ -159,7 +159,7 @@ function CorrelationDetail({ corr }: { corr: Correlation }) {
         <div className="flex flex-wrap gap-2 text-[10px]">
           <Badge variant="secondary">{strengthLabel} ({corr.effect_size})</Badge>
           <Badge variant="secondary">p = {corr.p_value < 0.001 ? "<0.001" : corr.p_value.toFixed(3)}</Badge>
-          <Badge variant="secondary">n = {corr.n} days</Badge>
+          <Badge variant="secondary">n = {corr.n_observations} days</Badge>
           <Badge variant="secondary">{corr.method}</Badge>
         </div>
       </CardContent>
@@ -286,7 +286,7 @@ export default function CorrelationsPage() {
     .sort((a, b) => {
       if (sortBy === "r_value") return Math.abs(b.r_value) - Math.abs(a.r_value);
       if (sortBy === "p_value") return a.p_value - b.p_value;
-      return b.n - a.n;
+      return b.n_observations - a.n_observations;
     });
 
   // Stats
