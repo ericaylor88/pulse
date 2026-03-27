@@ -185,7 +185,7 @@ function BiomarkerCard({
  </Badge>
  )}
  </div>
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} mt-0.5">
+ <p className="text-xs mt-0.5" style={{ color: "var(--pulse-text-secondary)" }}>
  {config.unit} · Optimal: {config.optimalMin}–{config.optimalMax}
  </p>
  </div>
