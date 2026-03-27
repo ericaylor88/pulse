@@ -164,7 +164,7 @@ export const SNP_CONFIG: Record<string, SnpConfig> = {
     description:
       'The VDR gene encodes the vitamin D receptor, which controls how effectively your cells respond to vitamin D. This affects bone density, immune function, and mood.',
     plainExplanation:
-      'This gene affects how well your cells use vitamin D once it's in your blood. Even with adequate blood levels, some genotypes may need higher levels to get the same cellular benefit.',
+      'This gene affects how well your cells use vitamin D once it\'s in your blood. Even with adequate blood levels, some genotypes may need higher levels to get the same cellular benefit.',
     genotypes: {
       'CC': {
         label: 'Normal receptor efficiency',
