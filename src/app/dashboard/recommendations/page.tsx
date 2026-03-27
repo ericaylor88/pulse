@@ -120,7 +120,7 @@ function RecommendationCard({
  <Button
  variant="ghost"
  size="sm"
- className="h-7 px-2 text-xs" className="hover:text-pulse-coral" style={{ color: "var(--pulse-text-secondary)" }}
+ className="h-7 px-2 text-xs hover:text-pulse-coral" style={{ color: "var(--pulse-text-secondary)" }}
  onClick={() => onDismiss(rec.id)}
  >
  <X className="h-3.5 w-3.5" />
@@ -241,7 +241,7 @@ export default function RecommendationsPage() {
  <Lightbulb className="h-12 w-12 text-pulse-text-secondary/30" />
  <div>
  <p className="text-sm font-medium">No recommendations yet</p>
- <p className="text-xs" className="mt-1 max-w-sm" style={{ color: "var(--pulse-text-secondary)" }}>
+ <p className="text-xs mt-1 max-w-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Recommendations are generated from correlation analysis, rule-based
  alerts using your genetic profile, and weekly AI health briefs.
  Click Generate to run the rule-based engine now.
@@ -276,7 +276,7 @@ export default function RecommendationsPage() {
  <div className="space-y-2">
  <button
  onClick={() => setShowDismissed(!showDismissed)}
- className="text-xs" className="hover:text-pulse-text-primary transition-colors" style={{ color: "var(--pulse-text-secondary)" }}
+ className="text-xs hover:text-pulse-text-primary transition-colors" style={{ color: "var(--pulse-text-secondary)" }}
  >
  {showDismissed ? "Hide" : "Show"} {dismissed.length} dismissed
  </button>
