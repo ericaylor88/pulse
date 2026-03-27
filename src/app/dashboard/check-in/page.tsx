@@ -389,7 +389,7 @@ export default function CheckInPage() {
  </div>
 
  {/* ── Save button ──────────────────────────────────── */}
- <div className="fixed bottom-0 left-0 right-0 z-50 p-4 backdrop-blur-sm"
+ <div className="fixed bottom-16 lg:bottom-0 left-0 right-0 z-50 p-4 backdrop-blur-sm"
              style={{ background: "var(--pulse-glass-bg)", borderTop: "1px solid var(--pulse-border-subtle)" }}>
  <div className="mx-auto max-w-lg">
  <Button
@@ -425,3 +425,4 @@ export default function CheckInPage() {
  </div>
  );
 }
+
