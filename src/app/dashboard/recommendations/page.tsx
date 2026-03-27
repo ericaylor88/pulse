@@ -84,7 +84,7 @@ function RecommendationCard({
  <span className={cn("text-lg mt-0.5", tier.color)}>{tier.icon}</span>
  <div className="flex-1 min-w-0">
  <p className="text-sm font-medium mb-1">{rec.title}</p>
- <p className="text-sm" className="leading-relaxed" style={{ color: "var(--pulse-text-secondary)" }}>{rec.body}</p>
+ <p className="text-sm leading-relaxed" style={{ color: "var(--pulse-text-secondary)" }}>{rec.body}</p>
  </div>
  </div>
 
@@ -97,7 +97,7 @@ function RecommendationCard({
  <SourceIcon className="h-2.5 w-2.5" />
  {source.label}
  </Badge>
- <span className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }} flex items-center gap-0.5">
+ <span className="text-[10px] flex items-center gap-0.5" style={{ color: "var(--pulse-text-tertiary)" }}>
  <Clock className="h-2.5 w-2.5" />
  {ageLabel}
  </span>
