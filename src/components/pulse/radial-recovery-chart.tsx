@@ -56,13 +56,17 @@ function AnimatedRing({
   const circumference = 2 * Math.PI * radius;
 
   const spring = useSpring(0, {
-    stiffness: 60,
-    damping: 15,
+    stiffness: 50,
+    damping: 20,
+    restDelta: 0.001,
   });
 
   const dashOffset = useTransform(
     spring,
-    (v: number) => circumference - v * circumference
+    (v: number) => {
+      const clamped = Math.max(0, Math.min(v, progress));
+      return circumference - clamped * circumference;
+    }
   );
 
   useEffect(() => {
@@ -228,20 +232,6 @@ export function RadialRecoveryChart({
           >
             {getScoreLabel(recoveryScore)}
           </motion.span>
-        )}
-      </div>
-
-      {/* Ring labels (small text outside, revealed on hover via CSS) */}
-      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-        {sleepScore !== null && (
-          <span className="text-[9px] font-medium" style={{ color: "var(--pulse-blue)" }}>
-            Sleep {Math.round(sleepScore)}%
-          </span>
-        )}
-        {hrvPercentile !== null && (
-          <span className="text-[9px] font-medium" style={{ color: "var(--pulse-blue)" }}>
-            HRV {Math.round(hrvPercentile)}%
-          </span>
         )}
       </div>
     </div>
