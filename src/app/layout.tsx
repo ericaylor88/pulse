@@ -11,13 +11,14 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import '../styles/globals.css';
 
 const META_THEME_COLORS = {
-  light: '#ffffff',
-  dark: '#09090b'
+  light: '#F8F8FC',
+  dark: '#0A0A0F'
 };
 
 export const metadata: Metadata = {
-  title: 'Pulse',
-  description: 'Personal health intelligence platform'
+  title: 'Pulse — Health Intelligence',
+  description:
+    'Personal health intelligence platform connecting wearables, body composition, genetics, and habits into actionable recommendations'
 };
 
 export const viewport: Viewport = {
@@ -60,7 +61,7 @@ export default async function RootLayout({
         <NuqsAdapter>
           <ThemeProvider
             attribute='class'
-            defaultTheme='system'
+            defaultTheme='dark'
             enableSystem
             disableTransitionOnChange
             enableColorScheme
