@@ -4,6 +4,8 @@ import Header from '@/components/layout/header';
 import { InfoSidebar } from '@/components/layout/info-sidebar';
 import { InfobarProvider } from '@/components/ui/infobar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
+import { PageTransition } from '@/components/pulse/page-transition';
+import { MobileBottomNav } from '@/components/pulse/mobile-bottom-nav';
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 
@@ -32,10 +34,15 @@ export default async function DashboardLayout({
           <SidebarInset>
             <Header />
             {/* page main content */}
-            {children}
+            <PageTransition>
+              <div className="pb-20 lg:pb-0">
+                {children}
+              </div>
+            </PageTransition>
             {/* page main content ends */}
           </SidebarInset>
           <InfoSidebar side='right' />
+          <MobileBottomNav />
         </InfobarProvider>
       </SidebarProvider>
     </KBar>
