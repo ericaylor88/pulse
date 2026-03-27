@@ -632,10 +632,7 @@ export default function BloodWorkPage() {
  if (showForm) {
  return (
  <div className="flex flex-1 flex-col gap-6 p-4 pt-0 lg:p-6 lg:pt-0">
- <div initial={{ opacity: 0, y: 8 }}
-       animate={{ opacity: 1, y: 0 }}
-       transition={{ duration: 0.2 }}
-       className="flex items-center justify-between">
+ <div className="flex items-center justify-between">
  <div>
  <h2 className="text-[30px] font-bold" style={{ color: "var(--pulse-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>Add Blood Panel</h2>
  <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>
@@ -654,10 +651,7 @@ export default function BloodWorkPage() {
 
  return (
  <div className="flex flex-1 flex-col gap-6 p-4 pt-0 pb-8 lg:p-6 lg:pt-0">
- <div initial={{ opacity: 0, y: 8 }}
-       animate={{ opacity: 1, y: 0 }}
-       transition={{ duration: 0.2 }}
-       className="flex items-center justify-between">
+ <div className="flex items-center justify-between">
  <div>
  <h2 className="text-[30px] font-bold" style={{ color: "var(--pulse-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>Blood Work</h2>
  <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>
