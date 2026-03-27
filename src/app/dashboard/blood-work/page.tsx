@@ -204,7 +204,7 @@ function BiomarkerCard({
 
  <RangeBar config={config} value={latest.value} />
 
- <div className="flex justify-between text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }} -mt-1">
+ <div className="flex justify-between text-[10px] -mt-1" style={{ color: "var(--pulse-text-tertiary)" }}>
  <span>{config.labMin}</span>
  <span className="text-pulse-emerald/70">
  {config.optimalMin}–{config.optimalMax}
@@ -232,7 +232,7 @@ function BiomarkerCard({
  <>
  <button
  onClick={() => setShowTrend(!showTrend)}
- className="flex items-center gap-1 text-xs" className="hover:text-pulse-text-primary transition-colors" style={{ color: "var(--pulse-text-secondary)" }}
+ className="flex items-center gap-1 text-xs hover:text-pulse-text-primary transition-colors" style={{ color: "var(--pulse-text-secondary)" }}
  >
  {showTrend ? (
  <ChevronUp className="h-3 w-3" />
@@ -680,7 +680,7 @@ export default function BloodWorkPage() {
  <TestTubes className="h-12 w-12 text-pulse-text-secondary/30" />
  <div>
  <p className="text-sm font-medium">No blood panels yet</p>
- <p className="text-xs" className="mt-1" style={{ color: "var(--pulse-text-secondary)" }}>
+ <p className="text-xs mt-1" style={{ color: "var(--pulse-text-secondary)" }}>
  Add your lab results to track biomarkers against optimal ranges
  </p>
  </div>
@@ -790,7 +790,7 @@ export default function BloodWorkPage() {
  <Card className="border-dashed" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-4 flex gap-3">
  <Info className="h-4 w-4 text-pulse-text-secondary shrink-0 mt-0.5" />
- <div className="text-xs" className="space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
+ <div className="text-xs space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
  <p>
  <strong>Optimal ranges</strong> reflect functional/preventive
  medicine targets, which are often tighter than standard lab
