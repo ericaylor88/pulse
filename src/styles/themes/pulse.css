@@ -1,0 +1,276 @@
+/* ==========================================================================
+   Pulse — Clinical Luxury Theme
+   Design Spec v1.0 — March 2026
+   
+   Dark-mode primary, light-mode secondary.
+   Health-specific semantic colors: emerald (positive), amber (caution), coral (alert).
+   Typography: Plus Jakarta Sans (display/body) + Geist Mono (data).
+   ========================================================================== */
+
+/* ---------- Light mode ---------- */
+[data-theme='pulse'] {
+  /* Core surfaces — light mode */
+  --background: #F8F8FC;
+  --foreground: #111118;
+  --card: #FFFFFF;
+  --card-foreground: #111118;
+  --popover: #FFFFFF;
+  --popover-foreground: #111118;
+
+  /* Brand action */
+  --primary: #6366F1;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary / muted */
+  --secondary: #E8E8F0;
+  --secondary-foreground: #111118;
+  --muted: #E8E8F0;
+  --muted-foreground: #555568;
+  --accent: #E8E8F0;
+  --accent-foreground: #111118;
+
+  /* Destructive (reuse coral) */
+  --destructive: #F87171;
+  --destructive-foreground: #FFFFFF;
+
+  /* Borders & inputs */
+  --border: #E8E8F0;
+  --input: #D0D0DE;
+  --ring: #6366F1;
+
+  /* Charts — ordered categorical palette from design spec */
+  --chart-1: #6366F1;
+  --chart-2: #34D399;
+  --chart-3: #60A5FA;
+  --chart-4: #FBBF24;
+  --chart-5: #A78BFA;
+
+  /* Sidebar */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #111118;
+  --sidebar-primary: #6366F1;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E8E8F0;
+  --sidebar-accent-foreground: #111118;
+  --sidebar-border: #E8E8F0;
+  --sidebar-ring: #6366F1;
+
+  /* Fonts — Clinical Luxury pairing */
+  --font-sans: 'Plus Jakarta Sans', var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'Geist Mono', var(--font-geist-mono), ui-monospace, monospace;
+  --font-data: 'Geist Mono', var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Radius — slightly larger for the premium feel */
+  --radius: 0.75rem;
+
+  /* Shadows — light mode */
+  --shadow-x: 0px;
+  --shadow-y: 1px;
+  --shadow-blur: 2px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.08;
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.04);
+  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.06);
+  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.08), 0px 1px 2px -1px hsl(0 0% 0% / 0.08);
+  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.08), 0px 1px 2px -1px hsl(0 0% 0% / 0.08);
+  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.08), 0px 2px 4px -1px hsl(0 0% 0% / 0.08);
+  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.08), 0px 4px 6px -1px hsl(0 0% 0% / 0.08);
+  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.08), 0px 8px 10px -1px hsl(0 0% 0% / 0.08);
+  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.20);
+
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  /* ---- Pulse health-specific semantic tokens ---- */
+  --pulse-emerald: #34D399;
+  --pulse-emerald-muted: rgba(52, 211, 153, 0.15);
+  --pulse-amber: #FBBF24;
+  --pulse-amber-muted: rgba(251, 191, 36, 0.15);
+  --pulse-coral: #F87171;
+  --pulse-coral-muted: rgba(248, 113, 113, 0.15);
+  --pulse-blue: #60A5FA;
+  --pulse-purple: #A78BFA;
+  --pulse-brand: #6366F1;
+
+  /* Surface layers */
+  --pulse-bg-base: #F8F8FC;
+  --pulse-bg-surface: #FFFFFF;
+  --pulse-bg-surface-raised: #FFFFFF;
+  --pulse-bg-surface-overlay: #FFFFFF;
+  --pulse-border-subtle: #E8E8F0;
+  --pulse-border-default: #D0D0DE;
+  --pulse-text-primary: #111118;
+  --pulse-text-secondary: #555568;
+  --pulse-text-tertiary: #9090A0;
+
+  /* Glassmorphism — light */
+  --pulse-glass-bg: rgba(255, 255, 255, 0.7);
+  --pulse-glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ---------- Dark mode (primary) ---------- */
+[data-theme='pulse'].dark {
+  /* Core surfaces — dark mode */
+  --background: #0A0A0F;
+  --foreground: #F0F0F5;
+  --card: #111118;
+  --card-foreground: #F0F0F5;
+  --popover: #1A1A24;
+  --popover-foreground: #F0F0F5;
+
+  /* Brand action */
+  --primary: #6366F1;
+  --primary-foreground: #FFFFFF;
+
+  /* Secondary / muted */
+  --secondary: #1A1A24;
+  --secondary-foreground: #F0F0F5;
+  --muted: #1A1A24;
+  --muted-foreground: #A0A0B8;
+  --accent: #222230;
+  --accent-foreground: #F0F0F5;
+
+  /* Destructive */
+  --destructive: #F87171;
+  --destructive-foreground: #111118;
+
+  /* Borders & inputs */
+  --border: #2A2A3A;
+  --input: #3A3A4E;
+  --ring: #6366F1;
+
+  /* Charts */
+  --chart-1: #6366F1;
+  --chart-2: #34D399;
+  --chart-3: #60A5FA;
+  --chart-4: #FBBF24;
+  --chart-5: #A78BFA;
+
+  /* Sidebar */
+  --sidebar: #111118;
+  --sidebar-foreground: #F0F0F5;
+  --sidebar-primary: #6366F1;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #1A1A24;
+  --sidebar-accent-foreground: #F0F0F5;
+  --sidebar-border: #2A2A3A;
+  --sidebar-ring: #6366F1;
+
+  /* Fonts */
+  --font-sans: 'Plus Jakarta Sans', var(--font-plus-jakarta-sans), system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, serif;
+  --font-mono: 'Geist Mono', var(--font-geist-mono), ui-monospace, monospace;
+  --font-data: 'Geist Mono', var(--font-geist-mono), ui-monospace, monospace;
+
+  --radius: 0.75rem;
+
+  /* Shadows — dark mode */
+  --shadow-x: 0px;
+  --shadow-y: 1px;
+  --shadow-blur: 2px;
+  --shadow-spread: 0px;
+  --shadow-opacity: 0.30;
+  --shadow-color: hsl(0 0% 0%);
+  --shadow-2xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.15);
+  --shadow-xs: 0px 1px 2px 0px hsl(0 0% 0% / 0.15);
+  --shadow-sm: 0px 1px 2px 0px hsl(0 0% 0% / 0.30), 0px 1px 2px -1px hsl(0 0% 0% / 0.30);
+  --shadow: 0px 1px 2px 0px hsl(0 0% 0% / 0.30), 0px 1px 2px -1px hsl(0 0% 0% / 0.30);
+  --shadow-md: 0px 1px 2px 0px hsl(0 0% 0% / 0.30), 0px 2px 4px -1px hsl(0 0% 0% / 0.30);
+  --shadow-lg: 0px 1px 2px 0px hsl(0 0% 0% / 0.30), 0px 4px 6px -1px hsl(0 0% 0% / 0.30);
+  --shadow-xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.30), 0px 8px 10px -1px hsl(0 0% 0% / 0.30);
+  --shadow-2xl: 0px 1px 2px 0px hsl(0 0% 0% / 0.45);
+
+  /* ---- Pulse health-specific semantic tokens (dark) ---- */
+  --pulse-emerald: #34D399;
+  --pulse-emerald-muted: rgba(52, 211, 153, 0.15);
+  --pulse-amber: #FBBF24;
+  --pulse-amber-muted: rgba(251, 191, 36, 0.15);
+  --pulse-coral: #F87171;
+  --pulse-coral-muted: rgba(248, 113, 113, 0.15);
+  --pulse-blue: #60A5FA;
+  --pulse-purple: #A78BFA;
+  --pulse-brand: #6366F1;
+
+  /* Surface layers */
+  --pulse-bg-base: #0A0A0F;
+  --pulse-bg-surface: #111118;
+  --pulse-bg-surface-raised: #1A1A24;
+  --pulse-bg-surface-overlay: #222230;
+  --pulse-border-subtle: #2A2A3A;
+  --pulse-border-default: #3A3A4E;
+  --pulse-text-primary: #F0F0F5;
+  --pulse-text-secondary: #A0A0B8;
+  --pulse-text-tertiary: #606078;
+
+  /* Glassmorphism — dark */
+  --pulse-glass-bg: rgba(17, 17, 24, 0.7);
+  --pulse-glass-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* ---------- Tailwind v4 @theme registration ---------- */
+[data-theme='pulse'] {
+  @theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+
+    /* Pulse semantic colors registered for Tailwind utility classes */
+    --color-pulse-emerald: var(--pulse-emerald);
+    --color-pulse-emerald-muted: var(--pulse-emerald-muted);
+    --color-pulse-amber: var(--pulse-amber);
+    --color-pulse-amber-muted: var(--pulse-amber-muted);
+    --color-pulse-coral: var(--pulse-coral);
+    --color-pulse-coral-muted: var(--pulse-coral-muted);
+    --color-pulse-blue: var(--pulse-blue);
+    --color-pulse-purple: var(--pulse-purple);
+    --color-pulse-brand: var(--pulse-brand);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
+    --font-data: var(--font-data);
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+  }
+}
