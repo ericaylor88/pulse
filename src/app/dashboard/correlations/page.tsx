@@ -5,15 +5,11 @@ import { createClient } from "@/lib/supabase/client";
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import {
-  ArrowUpDown,
   TrendingUp,
   TrendingDown,
   Info,
@@ -21,17 +17,9 @@ import {
   ChevronDown,
   ChevronUp,
   BarChart3,
+  RefreshCw,
+  AlertTriangle,
 } from "lucide-react";
-import {
-  ResponsiveContainer,
-  ScatterChart,
-  Scatter,
-  XAxis,
-  YAxis,
-  Tooltip as RechartsTooltip,
-  CartesianGrid,
-  Cell,
-} from "recharts";
 
 // ─── Types ───────────────────────────────────────────────────────────────
 
@@ -47,6 +35,29 @@ interface Correlation {
   confidence_tier: string;
   method: string;
   created_at: string;
+}
+
+interface Anomaly {
+  date: string;
+  anomaly_score: number;
+  deviations: Record<string, number>;
+}
+
+interface ComputeResult {
+  ok: boolean;
+  correlations: number;
+  high_confidence?: number;
+  medium_confidence?: number;
+  top_5?: { pair: string; r: number; tier: string }[];
+  message?: string;
+  error?: string;
+}
+
+interface AnomalyResult {
+  ok: boolean;
+  anomalies_found: number;
+  anomalies: Anomaly[];
+  error?: string;
 }
 
 // ─── Metric display config ───────────────────────────────────────────────
@@ -97,42 +108,6 @@ const TIER_CONFIG: Record<string, { color: string; bgColor: string; label: strin
   low: { color: "text-muted-foreground", bgColor: "bg-muted/30 border-border", label: "Low Confidence" },
 };
 
-// ─── Heatmap Cell ────────────────────────────────────────────────────────
-
-function HeatmapCell({
-  r,
-  isSelected,
-  onClick,
-}: {
-  r: number;
-  isSelected: boolean;
-  onClick: () => void;
-}) {
-  const absR = Math.abs(r);
-  const isPositive = r >= 0;
-
-  let bg: string;
-  if (absR >= 0.4) bg = isPositive ? "bg-emerald-500" : "bg-red-400";
-  else if (absR >= 0.25) bg = isPositive ? "bg-emerald-500/60" : "bg-red-400/60";
-  else if (absR >= 0.15) bg = isPositive ? "bg-emerald-500/30" : "bg-red-400/30";
-  else bg = "bg-muted/30";
-
-  return (
-    <button
-      onClick={onClick}
-      className={cn(
-        "w-10 h-10 rounded-md text-[10px] font-mono font-medium transition-all flex items-center justify-center",
-        bg,
-        isSelected ? "ring-2 ring-foreground ring-offset-1 ring-offset-background" : "",
-        absR >= 0.25 ? "text-white" : "text-muted-foreground"
-      )}
-      title={`r = ${r.toFixed(3)}`}
-    >
-      {r.toFixed(2)}
-    </button>
-  );
-}
-
 // ─── Correlation Detail Card ─────────────────────────────────────────────
 
 function CorrelationDetail({ corr }: { corr: Correlation }) {
@@ -157,9 +132,7 @@ function CorrelationDetail({ corr }: { corr: Correlation }) {
               {metricLabel(corr.variable_a)} → {metricLabel(corr.variable_b)}
             </p>
             {corr.lag_days > 0 && (
-              <p className="text-xs text-muted-foreground">
-                {corr.lag_days}-day lag
-              </p>
+              <p className="text-xs text-muted-foreground">{corr.lag_days}-day lag</p>
             )}
           </div>
           <div className="text-right shrink-0">
@@ -192,14 +165,56 @@ function CorrelationDetail({ corr }: { corr: Correlation }) {
   );
 }
 
+// ─── Anomaly Card ────────────────────────────────────────────────────────
+
+function AnomalyCard({ anomaly }: { anomaly: Anomaly }) {
+  const deviationEntries = Object.entries(anomaly.deviations).sort(
+    (a, b) => Math.abs(b[1]) - Math.abs(a[1])
+  );
+
+  return (
+    <Card className="border-amber-500/30 bg-amber-500/5">
+      <CardContent className="p-4 space-y-2">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-amber-500" />
+            <p className="text-sm font-medium">{anomaly.date}</p>
+          </div>
+          <Badge variant="outline" className="text-[10px] text-amber-500">
+            Score: {anomaly.anomaly_score.toFixed(3)}
+          </Badge>
+        </div>
+        {deviationEntries.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {deviationEntries.map(([metric, z]) => (
+              <Badge
+                key={metric}
+                variant="secondary"
+                className={cn("text-[10px]", z > 0 ? "text-red-400" : "text-blue-400")}
+              >
+                {metricLabel(metric)}: {z > 0 ? "+" : ""}{z.toFixed(1)}σ
+              </Badge>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 // ─── Main Page ───────────────────────────────────────────────────────────
 
 export default function CorrelationsPage() {
   const [correlations, setCorrelations] = useState<Correlation[]>([]);
+  const [anomalies, setAnomalies] = useState<Anomaly[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedCorr, setSelectedCorr] = useState<Correlation | null>(null);
+  const [computing, setComputing] = useState(false);
+  const [detecting, setDetecting] = useState(false);
+  const [computeResult, setComputeResult] = useState<ComputeResult | null>(null);
+  const [anomalyResult, setAnomalyResult] = useState<AnomalyResult | null>(null);
   const [filterTier, setFilterTier] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<"r_value" | "p_value" | "n">("r_value");
+  const [showAnomalies, setShowAnomalies] = useState(false);
 
   const supabase = createClient();
 
@@ -220,6 +235,49 @@ export default function CorrelationsPage() {
 
   useEffect(() => { loadCorrelations(); }, [loadCorrelations]);
 
+  // ─── Run Correlation Engine ──────────────────────────────────────────
+
+  const handleComputeCorrelations = async () => {
+    setComputing(true);
+    setComputeResult(null);
+    try {
+      const res = await fetch("/api/correlations/compute", { method: "POST" });
+      const data: ComputeResult = await res.json();
+
+      if (!res.ok) {
+        setComputeResult({ ok: false, correlations: 0, error: data.error ?? `Server error ${res.status}` });
+      } else {
+        setComputeResult(data);
+        if (data.ok && data.correlations > 0) await loadCorrelations();
+      }
+    } catch {
+      setComputeResult({ ok: false, correlations: 0, error: "Network error — could not reach the server." });
+    }
+    setComputing(false);
+  };
+
+  // ─── Run Anomaly Detection ───────────────────────────────────────────
+
+  const handleDetectAnomalies = async () => {
+    setDetecting(true);
+    setAnomalyResult(null);
+    try {
+      const res = await fetch("/api/anomalies/detect", { method: "POST" });
+      const data: AnomalyResult = await res.json();
+
+      if (!res.ok) {
+        setAnomalyResult({ ok: false, anomalies_found: 0, anomalies: [], error: data.error ?? `Server error ${res.status}` });
+      } else {
+        setAnomalyResult(data);
+        setAnomalies(data.anomalies ?? []);
+        if (data.anomalies_found > 0) setShowAnomalies(true);
+      }
+    } catch {
+      setAnomalyResult({ ok: false, anomalies_found: 0, anomalies: [], error: "Network error — could not reach the server." });
+    }
+    setDetecting(false);
+  };
+
   // Filter and sort
   const filtered = correlations
     .filter((c) => !filterTier || c.confidence_tier === filterTier)
@@ -228,14 +286,6 @@ export default function CorrelationsPage() {
       if (sortBy === "p_value") return a.p_value - b.p_value;
       return b.n - a.n;
     });
-
-  // Build unique variables for heatmap
-  const variables = [...new Set(correlations.flatMap((c) => [c.variable_a, c.variable_b]))];
-  const corrMap = new Map<string, Correlation>();
-  for (const c of correlations) {
-    corrMap.set(`${c.variable_a}__${c.variable_b}`, c);
-    corrMap.set(`${c.variable_b}__${c.variable_a}`, c);
-  }
 
   // Stats
   const highCount = correlations.filter((c) => c.confidence_tier === "high").length;
@@ -247,12 +297,81 @@ export default function CorrelationsPage() {
 
   return (
     <div className="flex flex-1 flex-col gap-4 p-4 pt-0 pb-8">
-      <div>
-        <h2 className="text-lg font-semibold">Correlations</h2>
-        <p className="text-sm text-muted-foreground">
-          Discover what actually affects your recovery, sleep, and health
-        </p>
+      {/* Header + Action Buttons */}
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <h2 className="text-lg font-semibold">Correlations</h2>
+          <p className="text-sm text-muted-foreground">
+            Discover what actually affects your recovery, sleep, and health
+          </p>
+        </div>
+        <div className="flex gap-2 shrink-0">
+          <Button variant="outline" size="sm" onClick={handleDetectAnomalies} disabled={detecting || computing}>
+            {detecting ? <RefreshCw className="h-4 w-4 mr-1.5 animate-spin" /> : <AlertTriangle className="h-4 w-4 mr-1.5" />}
+            {detecting ? "Detecting..." : "Detect Anomalies"}
+          </Button>
+          <Button size="sm" onClick={handleComputeCorrelations} disabled={computing || detecting}>
+            {computing ? <RefreshCw className="h-4 w-4 mr-1.5 animate-spin" /> : <Zap className="h-4 w-4 mr-1.5" />}
+            {computing ? "Computing..." : "Run Correlation Engine"}
+          </Button>
+        </div>
       </div>
+
+      {/* Compute result feedback */}
+      {computeResult && (
+        <Card className={cn("border", computeResult.ok && !computeResult.error ? "border-emerald-500/30 bg-emerald-500/5" : "border-red-400/30 bg-red-400/5")}>
+          <CardContent className="p-3">
+            {computeResult.error ? (
+              <p className="text-sm text-red-400">{computeResult.error}</p>
+            ) : computeResult.message ? (
+              <p className="text-sm text-muted-foreground">{computeResult.message}</p>
+            ) : (
+              <div className="space-y-2">
+                <p className="text-sm text-emerald-500 font-medium">
+                  Found {computeResult.correlations} correlations — {computeResult.high_confidence} high confidence, {computeResult.medium_confidence} medium
+                </p>
+                {computeResult.top_5 && computeResult.top_5.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {computeResult.top_5.map((t, i) => (
+                      <Badge key={i} variant="secondary" className="text-[10px]">
+                        {t.pair} (r={t.r.toFixed(3)})
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Anomaly result feedback */}
+      {anomalyResult && (
+        <Card className={cn("border", anomalyResult.error ? "border-red-400/30 bg-red-400/5" : anomalyResult.anomalies_found > 0 ? "border-amber-500/30 bg-amber-500/5" : "border-emerald-500/30 bg-emerald-500/5")}>
+          <CardContent className="p-3">
+            {anomalyResult.error ? (
+              <p className="text-sm text-red-400">{anomalyResult.error}</p>
+            ) : anomalyResult.anomalies_found === 0 ? (
+              <p className="text-sm text-emerald-500">No anomalies detected in the last 90 days — your metrics are consistent.</p>
+            ) : (
+              <button onClick={() => setShowAnomalies(!showAnomalies)} className="flex items-center gap-2 text-sm text-amber-500 font-medium w-full">
+                <AlertTriangle className="h-4 w-4" />
+                {anomalyResult.anomalies_found} anomalous day{anomalyResult.anomalies_found > 1 ? "s" : ""} detected
+                {showAnomalies ? <ChevronUp className="h-4 w-4 ml-auto" /> : <ChevronDown className="h-4 w-4 ml-auto" />}
+              </button>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Anomaly cards (expandable) */}
+      {showAnomalies && anomalies.length > 0 && (
+        <div className="grid gap-2 sm:grid-cols-2">
+          {anomalies.map((a) => (
+            <AnomalyCard key={a.date} anomaly={a} />
+          ))}
+        </div>
+      )}
 
       {loading ? (
         <div className="flex flex-1 items-center justify-center">
@@ -265,9 +384,8 @@ export default function CorrelationsPage() {
             <div>
               <p className="text-sm font-medium">No correlations computed yet</p>
               <p className="text-xs text-muted-foreground mt-1 max-w-sm">
-                The correlation engine needs at least 60 days of data to find
-                statistically significant patterns. Keep logging your habits and
-                the engine will run automatically.
+                Click <strong>Run Correlation Engine</strong> above to analyze your health data.
+                The engine needs at least 60 days of data to find statistically significant patterns.
               </p>
             </div>
             <div className="grid grid-cols-3 gap-4 mt-2 text-center">
@@ -284,6 +402,10 @@ export default function CorrelationsPage() {
                 <p className="text-[10px] text-muted-foreground">days = Low</p>
               </div>
             </div>
+            <Button onClick={handleComputeCorrelations} disabled={computing} className="mt-2">
+              {computing ? <RefreshCw className="h-4 w-4 mr-1.5 animate-spin" /> : <Zap className="h-4 w-4 mr-1.5" />}
+              {computing ? "Computing..." : "Run Correlation Engine"}
+            </Button>
           </CardContent>
         </Card>
       ) : (
@@ -310,9 +432,7 @@ export default function CorrelationsPage() {
             </Card>
             <Card>
               <CardContent className="p-3 text-center">
-                <p className="text-2xl font-bold tabular-nums">
-                  {correlations.length - highCount - medCount}
-                </p>
+                <p className="text-2xl font-bold tabular-nums">{correlations.length - highCount - medCount}</p>
                 <p className="text-[10px] text-muted-foreground">Low</p>
               </CardContent>
             </Card>
