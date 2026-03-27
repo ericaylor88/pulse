@@ -119,7 +119,7 @@ function RangeBar({
  const zone = getBiomarkerZone(config, value);
  const markerColor =
  zone === "optimal"
- ? "bg-emerald-500"
+ ? "bg-[var(--pulse-emerald)]"
  : zone === "caution_low" || zone === "caution_high"
  ? "bg-amber-500"
  : "bg-red-400";
@@ -127,14 +127,14 @@ function RangeBar({
  return (
  <div className="relative h-3 w-full rounded-full overflow-hidden">
  <div
- className="absolute top-0 h-full bg-muted/40 rounded-full"
+ className="absolute top-0 h-full bg-[var(--pulse-bg-surface-raised)]/40 rounded-full"
  style={{
  left: `${Math.max(0, labLeft)}%`,
  width: `${Math.min(100, labRight) - Math.max(0, labLeft)}%`,
  }}
  />
  <div
- className="absolute top-0 h-full bg-emerald-500/20 rounded-full"
+ className="absolute top-0 h-full bg-[var(--pulse-emerald)]/20 rounded-full"
  style={{
  left: `${Math.max(0, optimalLeft)}%`,
  width: `${Math.min(100, optimalRight) - Math.max(0, optimalLeft)}%`,
@@ -213,7 +213,7 @@ function BiomarkerCard({
  </div>
 
  {delta !== null && (
- <div className="flex items-center gap-1 text-xs" style={{ color: "var(--pulse-text-secondary)" }}">
+ <div className="flex items-center gap-1 text-xs" style={{ color: "var(--pulse-text-secondary)" }}>
  {delta > 0 ? (
  <TrendingUp className="h-3 w-3" />
  ) : delta < 0 ? (
@@ -232,7 +232,7 @@ function BiomarkerCard({
  <>
  <button
  onClick={() => setShowTrend(!showTrend)}
- className="flex items-center gap-1 text-xs" style={{ color: "var(--pulse-text-secondary)" }} hover:text-pulse-text-primary transition-colors"
+ className="flex items-center gap-1 text-xs" className="hover:text-pulse-text-primary transition-colors" style={{ color: "var(--pulse-text-secondary)" }}
  >
  {showTrend ? (
  <ChevronUp className="h-3 w-3" />
@@ -468,7 +468,7 @@ function PanelEntryForm({
  );
  })}
 
- <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/80 p-4 backdrop-blur-sm">
+ <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-[var(--pulse-bg-surface-overlay)] p-4 backdrop-blur-sm">
  <div className="mx-auto max-w-lg flex gap-2">
  <Button variant="outline" onClick={onCancel} className="flex-1">
  Cancel
@@ -632,10 +632,13 @@ export default function BloodWorkPage() {
  if (showForm) {
  return (
  <div className="flex flex-1 flex-col gap-6 p-4 pt-0 lg:p-6 lg:pt-0">
- <div className="flex items-center justify-between">
+ <div initial={{ opacity: 0, y: 8 }}
+       animate={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.2 }}
+       className="flex items-center justify-between">
  <div>
  <h2 className="text-[30px] font-bold" style={{ color: "var(--pulse-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>Add Blood Panel</h2>
- <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}">
+ <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Enter your lab results — only fill in what you have
  </p>
  </div>
@@ -651,10 +654,13 @@ export default function BloodWorkPage() {
 
  return (
  <div className="flex flex-1 flex-col gap-6 p-4 pt-0 pb-8 lg:p-6 lg:pt-0">
- <div className="flex items-center justify-between">
+ <div initial={{ opacity: 0, y: 8 }}
+       animate={{ opacity: 1, y: 0 }}
+       transition={{ duration: 0.2 }}
+       className="flex items-center justify-between">
  <div>
  <h2 className="text-[30px] font-bold" style={{ color: "var(--pulse-text-primary)", letterSpacing: "-0.02em", lineHeight: 1.2 }}>Blood Work</h2>
- <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}">
+ <p className="text-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Biomarker tracking with optimal ranges
  </p>
  </div>
@@ -666,7 +672,7 @@ export default function BloodWorkPage() {
 
  {loading ? (
  <div className="flex flex-1 items-center justify-center">
- <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "var(--pulse-text-tertiary)", borderTopColor: "transparent" }}" />
+ <div className="h-8 w-8 animate-spin rounded-full border-2" style={{ borderColor: "var(--pulse-text-tertiary)", borderTopColor: "transparent" }} />
  </div>
  ) : panels.length === 0 ? (
  <Card style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
@@ -674,7 +680,7 @@ export default function BloodWorkPage() {
  <TestTubes className="h-12 w-12 text-pulse-text-secondary/30" />
  <div>
  <p className="text-sm font-medium">No blood panels yet</p>
- <p className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} mt-1">
+ <p className="text-xs" className="mt-1" style={{ color: "var(--pulse-text-secondary)" }}>
  Add your lab results to track biomarkers against optimal ranges
  </p>
  </div>
@@ -695,7 +701,7 @@ export default function BloodWorkPage() {
  "shrink-0 rounded-lg border px-3 py-1.5 text-sm font-medium transition-all",
  selectedDate === date
  ? " text-pulse-text-primary"
- : "border-border text-pulse-text-secondary hover:text-pulse-text-primary"
+ : "border-[var(--pulse-border-default)] text-pulse-text-secondary hover:text-pulse-text-primary"
  )}
  >
  {formatDate(date)}
@@ -708,7 +714,7 @@ export default function BloodWorkPage() {
  <Card style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-3 text-center">
  <p className="text-2xl font-bold tabular-nums">{totalBiomarkers}</p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Tested</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Tested</p>
  </CardContent>
  </Card>
  <Card className="" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
@@ -716,7 +722,7 @@ export default function BloodWorkPage() {
  <p className="text-2xl font-bold tabular-nums text-pulse-emerald">
  {optimalCount}
  </p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Optimal</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Optimal</p>
  </CardContent>
  </Card>
  <Card className="" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
@@ -724,7 +730,7 @@ export default function BloodWorkPage() {
  <p className="text-2xl font-bold tabular-nums text-pulse-amber">
  {cautionCount}
  </p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Caution</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Caution</p>
  </CardContent>
  </Card>
  <Card className="" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
@@ -732,7 +738,7 @@ export default function BloodWorkPage() {
  <p className="text-2xl font-bold tabular-nums text-pulse-coral">
  {flaggedCount}
  </p>
- <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}">Flagged</p>
+ <p className="text-[10px]" style={{ color: "var(--pulse-text-tertiary)" }}>Flagged</p>
  </CardContent>
  </Card>
  </div>
@@ -784,7 +790,7 @@ export default function BloodWorkPage() {
  <Card className="border-dashed" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-4 flex gap-3">
  <Info className="h-4 w-4 text-pulse-text-secondary shrink-0 mt-0.5" />
- <div className="text-xs" style={{ color: "var(--pulse-text-secondary)" }} space-y-1">
+ <div className="text-xs" className="space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
  <p>
  <strong>Optimal ranges</strong> reflect functional/preventive
  medicine targets, which are often tighter than standard lab
