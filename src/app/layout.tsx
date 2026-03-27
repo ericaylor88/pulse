@@ -16,11 +16,29 @@ const META_THEME_COLORS = {
 export const metadata: Metadata = {
   title: 'Pulse — Health Intelligence',
   description:
-    'Personal health intelligence platform connecting wearables, body composition, genetics, and habits into actionable recommendations'
+    'Personal health intelligence platform connecting wearables, body composition, genetics, and habits into actionable recommendations',
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Pulse'
+  },
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' }
+    ],
+    apple: '/icons/icon-192.png'
+  }
 };
 
 export const viewport: Viewport = {
-  themeColor: META_THEME_COLORS.light
+  themeColor: META_THEME_COLORS.light,
+  viewportFit: 'cover',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false
 };
 
 export default async function RootLayout({
@@ -70,3 +88,4 @@ export default async function RootLayout({
     </html>
   );
 }
+
