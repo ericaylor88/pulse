@@ -39,12 +39,14 @@ function getGlowColor(score: number | null): string {
 // ─── Animated Ring ───────────────────────────────────────────────────────
 
 function AnimatedRing({
+  center,
   radius,
   strokeWidth,
   progress,
   color,
   delay = 0,
 }: {
+  center: number;
   radius: number;
   strokeWidth: number;
   progress: number; // 0 to 1
@@ -74,8 +76,8 @@ function AnimatedRing({
     <>
       {/* Track */}
       <circle
-        cx="50%"
-        cy="50%"
+        cx={center}
+        cy={center}
         r={radius}
         fill="none"
         stroke="var(--pulse-border-subtle)"
@@ -84,8 +86,8 @@ function AnimatedRing({
       />
       {/* Animated value arc */}
       <motion.circle
-        cx="50%"
-        cy="50%"
+        cx={center}
+        cy={center}
         r={radius}
         fill="none"
         stroke={color}
@@ -93,7 +95,7 @@ function AnimatedRing({
         strokeLinecap="round"
         strokeDasharray={circumference}
         style={{ strokeDashoffset: dashOffset }}
-        transform={`rotate(-90 ${radius + strokeWidth + 20} ${radius + strokeWidth + 20})`}
+        transform={`rotate(-90 ${center} ${center})`}
       />
     </>
   );
@@ -156,6 +158,7 @@ export function RadialRecoveryChart({
         {/* HRV ring — innermost secondary */}
         {hrvPercentile !== null && (
           <AnimatedRing
+            center={center}
             radius={hrvRadius}
             strokeWidth={5}
             progress={mounted ? hrvProgress : 0}
@@ -167,6 +170,7 @@ export function RadialRecoveryChart({
         {/* Sleep ring — outer secondary */}
         {sleepScore !== null && (
           <AnimatedRing
+            center={center}
             radius={sleepRadius}
             strokeWidth={5}
             progress={mounted ? sleepProgress : 0}
@@ -177,6 +181,7 @@ export function RadialRecoveryChart({
 
         {/* Recovery ring — primary */}
         <AnimatedRing
+          center={center}
           radius={primaryRadius}
           strokeWidth={12}
           progress={mounted ? recoveryProgress : 0}
