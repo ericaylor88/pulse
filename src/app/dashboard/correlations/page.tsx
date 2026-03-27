@@ -390,7 +390,7 @@ export default function CorrelationsPage() {
  <BarChart3 className="h-12 w-12 text-pulse-text-secondary/30" />
  <div>
  <p className="text-sm font-medium">No correlations computed yet</p>
- <p className="text-xs" className="mt-1 max-w-sm" style={{ color: "var(--pulse-text-secondary)" }}>
+ <p className="text-xs mt-1 max-w-sm" style={{ color: "var(--pulse-text-secondary)" }}>
  Click <strong>Run Correlation Engine</strong> above to analyze your health data.
  The engine needs at least 60 days of data to find statistically significant patterns.
  </p>
@@ -500,7 +500,7 @@ export default function CorrelationsPage() {
  {tier ? TIER_CONFIG[tier].label : "All"}
  </button>
  ))}
- <span className="text-xs" className="ml-2" style={{ color: "var(--pulse-text-secondary)" }}>Sort:</span>
+ <span className="text-xs ml-2" style={{ color: "var(--pulse-text-secondary)" }}>Sort:</span>
  {([["r_value", "|r|"], ["p_value", "p-value"], ["n", "Sample"]] as const).map(([key, label]) => (
  <button
  key={key}
@@ -528,7 +528,7 @@ export default function CorrelationsPage() {
  <Card className="border-dashed" style={{ background: "var(--pulse-bg-surface)", borderColor: "var(--pulse-border-subtle)" }}>
  <CardContent className="p-4 flex gap-3">
  <Info className="h-4 w-4 text-pulse-text-secondary shrink-0 mt-0.5" />
- <div className="text-xs" className="space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
+ <div className="text-xs space-y-1" style={{ color: "var(--pulse-text-secondary)" }}>
  <p>
  <strong>Correlation ≠ causation.</strong> These are statistical
  associations based on your personal data. They suggest patterns
