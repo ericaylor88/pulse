@@ -31,6 +31,10 @@ import {
   X,
   Calendar,
   Edit2,
+  Brain,
+  RefreshCw,
+  TrendingDown,
+  TrendingUp,
 } from "lucide-react";
 
 // ─── Types ───────────────────────────────────────────────────────────────
@@ -129,6 +133,25 @@ export default function IllnessLogPage() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
+  const [analyzing, setAnalyzing] = useState(false);
+  const [patternResult, setPatternResult] = useState<{
+    ok: boolean;
+    events_analyzed: number;
+    baseline_days: number;
+    patterns: {
+      metric: string;
+      label: string;
+      direction: string;
+      avg_z_score: number;
+      avg_pct_change: number;
+      events_showing_pattern: number;
+      total_events: number;
+      consistency: string;
+      confidence_tier: string;
+    }[];
+    message?: string;
+    error?: string;
+  } | null>(null);
 
   // Form state
   const [formStartDate, setFormStartDate] = useState(todayStr());
@@ -270,6 +293,24 @@ export default function IllnessLogPage() {
 
   // Separate active (no end_date) from resolved
   const activeEntries = entries.filter((e) => !e.end_date);
+
+  // Analyze pre-illness patterns
+  const handleAnalyzePatterns = async () => {
+    setAnalyzing(true);
+    setPatternResult(null);
+    try {
+      const res = await fetch("/api/illness-patterns/analyze", { method: "POST" });
+      const data = await res.json();
+      if (!res.ok) {
+        setPatternResult({ ok: false, events_analyzed: 0, baseline_days: 0, patterns: [], error: data.error ?? `Error ${res.status}` });
+      } else {
+        setPatternResult(data);
+      }
+    } catch {
+      setPatternResult({ ok: false, events_analyzed: 0, baseline_days: 0, patterns: [], error: "Network error." });
+    }
+    setAnalyzing(false);
+  };
   const resolvedEntries = entries.filter((e) => !!e.end_date);
 
   return (
@@ -283,12 +324,75 @@ export default function IllnessLogPage() {
           </p>
         </div>
         {!showForm && (
-          <Button onClick={openNewForm}>
-            <Plus className="mr-2 h-4 w-4" />
-            Log Illness
-          </Button>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={handleAnalyzePatterns} disabled={analyzing || entries.length === 0}>
+              {analyzing ? <RefreshCw className="mr-2 h-4 w-4 animate-spin" /> : <Brain className="mr-2 h-4 w-4" />}
+              {analyzing ? "Analyzing..." : "Analyze Patterns"}
+            </Button>
+            <Button onClick={openNewForm}>
+              <Plus className="mr-2 h-4 w-4" />
+              Log Illness
+            </Button>
+          </div>
         )}
       </div>
+
+      {/* Pattern Analysis Results */}
+      {patternResult && (
+        <Card className={cn("border", patternResult.error ? "border-red-400/30 bg-red-400/5" : patternResult.patterns.length > 0 ? "border-amber-500/30 bg-amber-500/5" : "border-emerald-500/30 bg-emerald-500/5")}>
+          <CardContent className="p-4 space-y-3">
+            {patternResult.error ? (
+              <p className="text-sm text-red-400">{patternResult.error}</p>
+            ) : patternResult.message ? (
+              <p className="text-sm text-muted-foreground">{patternResult.message}</p>
+            ) : patternResult.patterns.length === 0 ? (
+              <p className="text-sm text-emerald-500">
+                Analyzed {patternResult.events_analyzed} illness event{patternResult.events_analyzed !== 1 ? "s" : ""} against {patternResult.baseline_days} baseline days — no consistent pre-illness patterns detected yet.
+              </p>
+            ) : (
+              <>
+                <div className="flex items-center gap-2">
+                  <Brain className="h-4 w-4 text-amber-500" />
+                  <p className="text-sm font-medium text-amber-500">
+                    {patternResult.patterns.length} pre-illness pattern{patternResult.patterns.length !== 1 ? "s" : ""} detected ({patternResult.events_analyzed} event{patternResult.events_analyzed !== 1 ? "s" : ""} analyzed)
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  {patternResult.patterns.map((p) => {
+                    const tierColor = p.confidence_tier === "high" ? "text-emerald-500" : p.confidence_tier === "medium" ? "text-amber-500" : "text-muted-foreground";
+                    return (
+                      <div key={p.metric} className="flex items-start gap-3 rounded-md border border-border/50 bg-background/50 p-3">
+                        {p.direction === "down" ? (
+                          <TrendingDown className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                        ) : (
+                          <TrendingUp className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                        )}
+                        <div className="flex-1 space-y-1">
+                          <p className="text-sm font-medium">{p.label}</p>
+                          <p className="text-xs text-muted-foreground">
+                            {p.direction === "down" ? "Drops" : "Rises"} ~{Math.abs(p.avg_pct_change)}% before illness ({p.avg_z_score > 0 ? "+" : ""}{p.avg_z_score}σ)
+                          </p>
+                          <div className="flex gap-1.5 flex-wrap">
+                            <Badge variant="secondary" className={cn("text-[10px]", tierColor)}>
+                              {p.confidence_tier} confidence
+                            </Badge>
+                            <Badge variant="secondary" className="text-[10px]">
+                              {p.consistency} events
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="text-[10px] text-muted-foreground">
+                  Patterns saved to Recommendations. Confidence improves with more logged illness events.
+                </p>
+              </>
+            )}
+          </CardContent>
+        </Card>
+      )}
 
       {loading ? (
         <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed p-8">
