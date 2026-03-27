@@ -458,7 +458,7 @@ export default function IllnessLogPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.25 }}
             >
-              <Card style={{ background: "var(--pulse-bg-surface)", border: "2px solid var(--pulse-brand)", borderOpacity: 0.2 }}>
+              <Card style={{ background: "var(--pulse-bg-surface)", border: "2px solid color-mix(in srgb, var(--pulse-brand) 20%, transparent)" }}>
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base" style={{ color: "var(--pulse-text-primary)" }}>
                     {editingId ? "Edit Illness" : "Log New Illness"}
@@ -656,8 +656,7 @@ export default function IllnessLogPage() {
                     <Card
                       style={{
                         background: "var(--pulse-bg-surface)",
-                        border: "1px solid var(--pulse-amber)",
-                        borderOpacity: 0.3,
+                        border: "1px solid color-mix(in srgb, var(--pulse-amber) 30%, transparent)",
                       }}
                     >
                       <CardContent className="p-4">
